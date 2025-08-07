@@ -5,3 +5,4 @@ export default function Dot({ active, onClick }) {
         </li>
     );
 }
+// make the images clickable dots for the advertisement slider 
