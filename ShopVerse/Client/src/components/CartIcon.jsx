@@ -6,7 +6,7 @@ export default function CartIcon() {
     return (
         <li>
             <a href="#">
-                <FontAwesomeIcon icon={faShoppingCart} className="icon-hover action"  />
+                <FontAwesomeIcon icon={faShoppingCart} className="icon-hover action cart-icon"  />
             </a>
         </li>
     );
