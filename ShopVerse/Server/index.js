@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import express from 'express'
-import testingRouter from './Routes/test.routes.js'
-
+import userRouter from './Routes/user.routes.js'
+import productRouter from './Routes/product.routes.js'
 const app = express()
 const port = 3000
 
@@ -15,7 +15,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/ShopVerse')
 .catch((err) => {console.error(err)});
 
 
-app.use('/test',testingRouter)
+app.use('/user',userRouter)
+app.use('/product',productRouter)
 
 
 
