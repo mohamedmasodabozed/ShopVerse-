@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Dot from "./Dot.jsx";
-export default function AdvertiseArea() {
+export default function AdvertiseArea(props) {
     const imgSrcs = [
         "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=400&fit=crop",
         "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=400&fit=crop",
@@ -24,11 +24,11 @@ export default function AdvertiseArea() {
     return (
         <div className="advertise-area">
             <img src={imgSrcs[currentIndex]} alt="Place Holder" />
-            <ul>
+            { <ul>
                 {imgSrcs.map((src, index) => (
                     <Dot key={index} active={index === currentIndex} onClick={() => handleDotClick(index)} />
-                ))}
-            </ul>
+                ))} 
+            </ul> }
         </div>
     );
 }

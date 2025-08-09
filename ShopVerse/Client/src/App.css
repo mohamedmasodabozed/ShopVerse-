@@ -107,6 +107,9 @@ nav {
   50% {
     transform: translateY(-2px);
   }
+  70% {
+    transform: translateY(-1px);
+  }
   100% {
     transform: translateY(0);
   }
@@ -580,17 +583,22 @@ nav {
 .flash-sales-tag span
 {
   color: #DB4444;
-  font-family: poppins;
-  font-weight: bold;
-  font-style: normal;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0%;
+    font-family: poppins;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    display: flex
+;
+    justify-content: flex-start;
+    align-items: center;
 }
 .flash-sales-tag 
 {
     position: relative;
     left: 26px;
+    margin-bottom: 20px;
 }
 
 .flash-sales-tag::before 
@@ -611,10 +619,12 @@ nav {
 }
 .flash-sales-header 
 {
-    display: flex;
+        display: flex
+;
     justify-content: space-between;
     align-items: center;
     margin-right: 20px;
+    margin-left: -5px;
     
 }
 .flash-sales-header h2 
@@ -1008,4 +1018,298 @@ nav {
 .show-more-button:hover {
     background: #c73e3e;
     box-shadow: 0 4px 12px rgba(219, 68, 68, 0.3);
+}
+
+.separator {
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, transparent 0%, #E0E0E0 20%, #E0E0E0 80%, transparent 100%);
+    margin: 60px auto;
+    position: relative;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8%;
+    margin-bottom: 8%;
+    bottom: -54px;
+}
+
+.separator::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 1px;
+    background: #F0F0F0;
+    opacity: 0.5;
+}
+
+.separator-text {
+    background: white;
+    color: #999;
+    padding: 0 20px;
+    font-size: 18px;
+    z-index: 1;
+    position: relative;
+}
+.categories-list 
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-right: 130px;
+}
+.categories-list .cat-card 
+{
+    list-style: none;
+    text-align: center;
+    width: 170px;
+    background: none;
+    height: 145px;
+    margin-right: 20px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b0a4a4;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.categories-list .cat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(219, 68, 68, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.categories-list .cat-card svg 
+{
+    width: 56px;
+    height: 56px;
+    transition: all 0.3s ease;
+}
+
+.categories-list .cart-card p 
+{
+  font-size: 16px;
+  font-family:'Poppins';
+}
+
+.categories-list .cat-card p 
+{
+  font-size: 16px;
+  font-family:'Poppins';
+  transition: all 0.3s ease;
+}
+
+.categories-list .cat-card:hover {
+    background-color: #DB4444;
+    color: white;
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(219, 68, 68, 0.4);
+    border-color: #DB4444;
+}
+
+.categories-list .cat-card:hover::before {
+    left: 100%;
+}
+
+.categories-list .cat-card:hover svg {
+    transform: scale(1.2) rotateY(360deg);
+    color: white;
+}
+
+.categories-list .cat-card:hover p {
+    transform: translateY(-2px);
+    font-weight: 600;
+}
+
+.categories-list .cat-card:active {
+    transform: translateY(-5px) scale(1.02);
+    transition: transform 0.1s ease;
+}
+.Advertise 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Advertise img
+{
+  width: 1170px;
+  height: 500px;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  cursor: pointer;
+}
+.Advertise img:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+
+}
+.new-arrival {
+    position: absolute;
+    left: 10%;
+    
+}
+.new-arrival h2 
+{
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    letter-spacing: 5px;
+    margin: 0;
+    position: relative;
+    left: -8px;
+}
+
+/* Arrival Card Grid Layout */
+.arrival-card {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.arrival-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    height: 600px;
+    width: 100%;
+}
+
+.grid-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: scale(1.02);
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover img {
+    transform: scale(1.1);
+}
+
+.large-item {
+    grid-row: 1 / 3;
+    grid-column: 1 / 2;
+}
+
+.medium-item {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+}
+
+.small-item:first-of-type {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+.small-item:last-of-type {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+/* Split the bottom right into two smaller items */
+.arrival-grid .small-item {
+    width: calc(50% - 10px);
+}
+
+.arrival-grid .small-item:nth-child(3) {
+    float: left;
+}
+
+.arrival-grid .small-item:nth-child(4) {
+    float: right;
+}
+
+/* Better approach for bottom items */
+.arrival-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    height: 600px;
+    width: 100%;
+}
+
+.large-item {
+    grid-row: 1 / 3;
+    grid-column: 1 / 2;
+}
+
+.medium-item {
+    grid-row: 1 / 2;
+    grid-column: 2 / 4;
+}
+
+.small-item:nth-child(3) {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+.small-item:nth-child(4) {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+}
+
+.item-content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    z-index: 2;
+}
+
+.item-content h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: white;
+}
+
+.item-content p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    margin: 0 0 12px 0;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+}
+
+.shop-link {
+    color: white;
+    text-decoration: underline;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.shop-link:hover {
+    color: #DB4444;
 }
