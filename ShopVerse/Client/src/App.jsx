@@ -9,6 +9,7 @@ import BestSellers from './components/BestSellers/BestSellers.jsx'
 import Advertise from './components/BestSellers/Advertise.jsx'
 import Separator from './components/FlashSales/Seprator.jsx'
 import NewArrival from './components/NewArrival/NewArrival.jsx'
+import Footer from './components/Footer/Footer.jsx'
 function App() {
     // Flash Sales products data
     const flashSalesProducts = [
@@ -170,6 +171,7 @@ function App() {
             />
             <Separator />
             <NewArrival />
+            <Footer />
         </>
     )
 }
