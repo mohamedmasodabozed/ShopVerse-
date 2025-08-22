@@ -8,8 +8,9 @@ import cors from 'cors'
 
 
 
-const app = express()
-const port = 3000
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 
 dotenv.config()
@@ -31,9 +32,9 @@ app.use('/products',productRouter)
 
 
 app.listen(port, (error) => {
-    if (error) console.log(`Error in Connection: ${error}`)
-    else {
-        console.log(`Connected on ${port}`)
+    if (error) {
+        console.log(`Error in Connection: ${error}`);
+    } else {
+        console.log(`Server running on port ${port}`);
     }
-
-})
+});

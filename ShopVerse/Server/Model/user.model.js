@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema({
     },
     role:{
         type:String,
-        enum:['customer','seller','admin'],
+        enum:['customer','seller','admin','buyer'], // allow 'buyer' for frontend compatibility
         required:true
     },
     product_id:[{
