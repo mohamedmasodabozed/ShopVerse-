@@ -4,7 +4,7 @@ import Navigation from './Navigation.jsx';
 import UserActions from './UserActions.jsx';
 
 export default function Header() {
-    const loggedIn = true; 
+    const loggedIn = false; 
     
     return (
         <header>

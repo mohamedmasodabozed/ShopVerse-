@@ -1,5 +1,6 @@
 
 import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header.jsx'
 import Advertisement from './components/Advirtise/Advertisement.jsx'
@@ -10,7 +11,11 @@ import Advertise from './components/BestSellers/Advertise.jsx'
 import Separator from './components/FlashSales/Seprator.jsx'
 import NewArrival from './components/NewArrival/NewArrival.jsx'
 import Footer from './components/Footer/Footer.jsx'
-function App() {
+import SignUp from './components/Auth/SignUp'
+import Login from './components/Auth/Login'
+import ForgotPassword from './components/Auth/ForgotPassword'
+// Home component that contains all the main page content
+function Home() {
     // Flash Sales products data
     const flashSalesProducts = [
         {
@@ -173,6 +178,19 @@ function App() {
             <NewArrival />
             <Footer />
         </>
+    )
+}
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+            </Routes>
+        </Router>
     )
 }
 
