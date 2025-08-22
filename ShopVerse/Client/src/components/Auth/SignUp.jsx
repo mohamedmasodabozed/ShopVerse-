@@ -45,31 +45,33 @@ export default function SignUp() {
       setError('');
       setIsLoading(true);
       
-      // Prepare data for backend - remove confirmPassword as it's not needed on server
+      // Prepare data for backend - map 'name' to 'userName' as expected by backend
       const dataToSend = {
-        name: formData.name,
+        userName: formData.name,
         email: formData.email,
         password: formData.password,
         role: formData.role
       };
       
-      const response = await fetch('/api/signup', {
+      const response = await fetch('http://localhost:3000/users/signUp', {
         method: 'POST',
         body: JSON.stringify(dataToSend),
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to sign up');
+      let data = null;
+      try {
+        data = await response.json();
+      } catch (e) {
+        // If response is empty or not JSON, set a generic error
+        console.log(response);
+        throw new Error('Server error: Invalid response');
       }
-      
+      if (!response.ok) {
+        throw new Error(data.Message || 'Failed to sign up');
+      }
       console.log('Sign up successful:', data);
-      
-      // Redirect to login page after successful signup
       alert('Account created successfully! Please log in.');
       navigate('/login');
       
@@ -80,7 +82,6 @@ export default function SignUp() {
       setIsLoading(false);
     }
   };
-
   return (
     <div>
       <Header />

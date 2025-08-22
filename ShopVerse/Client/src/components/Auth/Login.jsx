@@ -32,9 +32,9 @@ export default function Login({isLoggedIn, setIsLoggedIn})
         try {
             setError('');
             setIsLoading(true);
-            
-            const response = await fetch('/api/login', {
-                method: 'POST', 
+
+            const response = await fetch('http://localhost:3000/users/signIn', {
+                method: 'POST',
                 body: JSON.stringify(formData),
                 headers: {
                     'Content-Type': 'application/json'
@@ -59,6 +59,7 @@ export default function Login({isLoggedIn, setIsLoggedIn})
             navigate('/');
             
         } catch (err) {
+            console.log(formData);
             console.error('Login error:', err);
             setError(err.message || 'Login failed. Please try again.');
         } finally {
