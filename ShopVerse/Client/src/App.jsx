@@ -15,7 +15,8 @@ import SignUp from './components/Auth/SignUp'
 import Login from './components/Auth/Login'
 import ForgotPassword from './components/Auth/ForgotPassword'
 // Home component that contains all the main page content
-function Home() {
+
+function Home({isLoggedIn}) {
     // Flash Sales products data
     const flashSalesProducts = [
         {
@@ -158,7 +159,7 @@ function Home() {
 
     return (
         <>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} />
             <Advertisement />
             <FlashSales 
                 text="Today's" 
@@ -182,12 +183,13 @@ function Home() {
 }
 
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
             </Routes>
         </Router>

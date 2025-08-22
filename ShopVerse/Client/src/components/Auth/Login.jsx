@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Header from '../Header.jsx'
 
-export default function Login() 
+export default function Login({isLoggedIn, setIsLoggedIn}) 
 {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -51,7 +51,10 @@ export default function Login()
             
             // Save token to localStorage or cookies
             localStorage.setItem('authToken', data.token);
-            
+            if(!isLoggedIn)
+            {
+                setIsLoggedIn(true);
+            }
             // Redirect to dashboard or home page
             navigate('/');
             
