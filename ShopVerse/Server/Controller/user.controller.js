@@ -13,7 +13,7 @@ export async function signUp(req, res) {
         res.json({ Message: "Success", Data: user });
     } catch (error) {
         // Always return a valid JSON response
-        res.status(400).json({ Message: error?.message || "Signup failed" });
+        res.status(400).json({ Message: `${error}` });
     }
 
 }
@@ -33,12 +33,9 @@ export async function signIn(req, res) {
         if (!verifyPass) {
             return res.status(400).json({ Message: "Email or Password is Incorrect" });
         }
-        if (!process.env.SECRET_TOKEN) {
-            return res.status(500).json({ Message: "Server misconfiguration: SECRET_TOKEN missing" });
-        }
-        let token = jwt.sign({ id: user._id, email: user.email, role: user.role },"hello world", { expiresIn: '10h' });
+        let token = jwt.sign({ id: user._id, email: user.email, role: user.role },process.env.SECRET_TOKEN, { expiresIn: '10h' });
         res.json({ Message: "Success", Data: user, token: token });
     } catch (error) {
-        res.status(400).json({ Message: error?.message || "Login failed" });
+        res.status(400).json({ Message: `${error}` });
     }
 }
