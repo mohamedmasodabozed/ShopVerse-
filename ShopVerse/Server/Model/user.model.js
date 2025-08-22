@@ -9,12 +9,14 @@ const userSchema = mongoose.Schema({
         required:true,
         minLength:[6,'UserName must be between 6-30 characters'],
         maxLength:[30,'UserName must be between 6-30 characters'],
+        unique:true
 
     },
     email:{
         type:String,
         required:true,
-        
+
+        unique:true
     },
     password:{
         type:String,
@@ -23,7 +25,7 @@ const userSchema = mongoose.Schema({
     },
     role:{
         type:String,
-        enum:['customer','seller','admin'], // allow 'buyer' for frontend compatibility
+        enum:['customer','seller','admin'], 
         required:true
     },
     product_id:[{
