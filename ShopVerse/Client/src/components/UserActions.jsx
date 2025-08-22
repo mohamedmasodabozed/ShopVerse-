@@ -22,14 +22,14 @@ export default function UserActions({ loggedIn }) {
         <div className="search-items">
             <ul>
                 <SearchBar />
-                <WishlistIcon />
-                <CartIcon />
                 {loggedIn ? (
                     <li className="profile-wrapper" 
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave} 
                         onClick={handleClick}>
                         <Profile />
+                        <WishlistIcon />
+                        <CartIcon />
                         {(isHovered || isClicked) && <Profilenav />}
                     </li>
                 ) : null}

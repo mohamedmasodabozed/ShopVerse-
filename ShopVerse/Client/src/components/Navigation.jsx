@@ -1,13 +1,32 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navigation({ loggedIn }) {
+    function renderLinks() {
+        if (!loggedIn) {
+            return (
+                <>
+                    <li><Link to="/login">Login</Link></li>
+                    <li><Link to="/signup">Sign Up</Link></li>
+                </>
+            );
+        }
+        return (
+            <>
+                <li><Link to="/">Home</Link></li>
+                <li>Contact</li>
+                <li>About</li>
+            </>
+        );
+    }
+
     return (
         <div className="links">
             <ul>
-                <li>Home</li>
+                <li><Link to="/">Home</Link></li>
                 <li>Contact</li>
                 <li>About</li>
-                {loggedIn === false ? <li>Sign up</li> : null}
+                {renderLinks()}
             </ul>
         </div>
     );

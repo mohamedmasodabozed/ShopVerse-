@@ -3,15 +3,14 @@ import Logo from './Logo.jsx';
 import Navigation from './Navigation.jsx';
 import UserActions from './UserActions.jsx';
 
-export default function Header() {
-    const loggedIn = true; 
-    
+export default function Header({isLoggedIn}) {
+
     return (
         <header>
             <nav>
                 <Logo />
-                <Navigation loggedIn={loggedIn} />
-                <UserActions loggedIn={loggedIn} />
+                <Navigation loggedIn={isLoggedIn} />
+                <UserActions loggedIn={isLoggedIn} />
             </nav>
         </header>
     );

@@ -1,5 +1,6 @@
 
 import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header.jsx'
 import Advertisement from './components/Advirtise/Advertisement.jsx'
@@ -10,7 +11,12 @@ import Advertise from './components/BestSellers/Advertise.jsx'
 import Separator from './components/FlashSales/Seprator.jsx'
 import NewArrival from './components/NewArrival/NewArrival.jsx'
 import Footer from './components/Footer/Footer.jsx'
-function App() {
+import SignUp from './components/Auth/SignUp'
+import Login from './components/Auth/Login'
+import ForgotPassword from './components/Auth/ForgotPassword'
+// Home component that contains all the main page content
+
+function Home({isLoggedIn}) {
     // Flash Sales products data
     const flashSalesProducts = [
         {
@@ -153,7 +159,7 @@ function App() {
 
     return (
         <>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} />
             <Advertisement />
             <FlashSales 
                 text="Today's" 
@@ -173,6 +179,20 @@ function App() {
             <NewArrival />
             <Footer />
         </>
+    )
+}
+
+function App() {
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+            </Routes>
+        </Router>
     )
 }
 
