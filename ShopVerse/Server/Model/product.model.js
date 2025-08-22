@@ -37,7 +37,18 @@ const productSchema = mongoose.Schema({
     },
 
     productQuantity:{
-        type:Number
+        type:Number,
+        required:true
+    },
+    productImage:{
+        URL:{
+            type:String,
+            required:true
+        },
+        ID:{
+            type:String,
+            required:true
+        }
     }
 
 }, {timestamps:true})
