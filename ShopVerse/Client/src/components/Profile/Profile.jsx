@@ -5,7 +5,7 @@ import Header from "../Header";
 import EditProfile from "./EditProfile";
 import "./Profile.css"; // Import the CSS file
 
-export default function Profile({ isLoggedIn }) {
+export default function Profile() {
     // Get token from localStorage and handle the case if it's not present
     let token = localStorage.getItem("authToken");
     // Use jwtDecode function to decode the token if it exists
