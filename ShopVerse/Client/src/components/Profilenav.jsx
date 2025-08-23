@@ -2,14 +2,14 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBox, faXmark, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faUser } from '@fortawesome/free-regular-svg-icons';
-
+import {Link} from 'react-router-dom';
 export default function Profilenav() {
     return (
         <nav className="profile-nav">
             <ul>
                 <li>
                     <FontAwesomeIcon icon={faUser} />
-                    <p>Manage My Account</p>
+                    <Link to="/profile">Manage My Account</Link>
                 </li>
                 <li>
                     <FontAwesomeIcon icon={faBox} />
