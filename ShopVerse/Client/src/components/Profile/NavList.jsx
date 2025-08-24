@@ -1,38 +1,39 @@
 import { Link } from "react-router-dom";
+import React from "react";
+export default function NavList({role, activeLink, setActiveLink}) { 
 
-export default function NavList({role}) { 
     return(
         <div className="profile-sidebar">
             <div className="profile-section">
                 <h3>Account</h3>
                 <ul className="nav-list">
                     <li>
-                        <Link to="/profile" className="active">
+                        <Link to="/profile" className={activeLink === 'profile' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'profile')}>
                             <i className="fas fa-user"></i> My Profile
                         </Link>
                     </li>
                     <li>
-                        <Link to="/orders">
+                        <Link to="/orders" className={activeLink === 'orders' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'orders')}>
                             <i className="fas fa-shopping-bag"></i> My Orders
                         </Link>
                     </li>
                     {role ? <li>
-                        <Link to="/selling-products">
+                        <Link to="/selling-products" className={activeLink === 'selling-products' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'selling-products')}>
                             <i className="fas fa-shopping-bag"></i> Selling Products
                         </Link>
                     </li> : null}
                     <li>
-                        <a href="#">
+                        <a href="#" className={activeLink === 'wishlist' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'wishlist')}>
                             <i className="fas fa-heart"></i> My Wishlist
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" className={activeLink === 'address-book' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'address-book')}>
                             <i className="fas fa-map-marker-alt"></i> Address Book
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" className={activeLink === 'payment-methods' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'payment-methods')}>
                             <i className="fas fa-credit-card"></i> Payment Methods
                         </a>
                     </li>

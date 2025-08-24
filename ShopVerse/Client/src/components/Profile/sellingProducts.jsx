@@ -3,9 +3,12 @@ import Card from "../FlashSales/Card";
 import Header from "../Header";
 import "./sellingProducts.css";
 import mockImage from "../../assets/istockphoto-1409329028-1024x1024.jpg"
-export default function SellingProducts() {
+import ProductForm from "./ProductForm";
+import { useState } from "react";
+export default function SellingProducts({ isLoggedIn }) {
     let token = localStorage.getItem("authToken");
     let role = "";
+    const [shown, setShown] = useState(false);
     if (token) {
         try {
             const decoded = JSON.parse(atob(token.split('.')[1]));
@@ -20,27 +23,23 @@ export default function SellingProducts() {
     let price = 100;
     let rating = 4.5;
     let discountPercentage = 10;
-    function handleSubmit(event) {
-        event.preventDefault();
-        // Handle form submission logic here
-        console.log("Form submitted");
-    }
     function showForm() {
-        // Show form logic here
         console.log("Show form");
+
     }
+    const [activeLink, setActiveLink] = useState('selling-products');
     return (
         <div>
-            <Header />
+            <Header isLoggedIn={!!token} />
             <div className="seller-products-container">
-                <NavList role={role} />
+                <NavList role={role} activeLink={activeLink} setActiveLink={setActiveLink} />
                 <div className="seller-main">
                     <div className="seller-title">Your Products</div>
-                    <div className="addCard" onClick={showForm}>
+                    <div className="addCard" onClick={() => setShown(!shown)}>
                         <span>Add Your Products</span>
                         <span>+</span>
                     </div>
-                    <div className="current-products" onSubmit={handleSubmit}>
+                    <div className="current-products">
                         <Card  image={mockImage}
                                 title={title}
                                 description={description}
@@ -48,6 +47,7 @@ export default function SellingProducts() {
                                 rating={rating}
                                 discountPercentage={discountPercentage}
                         />
+                        {shown ? <ProductForm isLoggedIn={isLoggedIn} onClose={() => setShown(false)} /> : null}
                     </div>
                 </div>
             </div>

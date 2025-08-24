@@ -4,28 +4,29 @@ import { faBox, faXmark, faArrowRightFromBracket } from '@fortawesome/free-solid
 import { faStar, faUser } from '@fortawesome/free-regular-svg-icons';
 import {Link} from 'react-router-dom';
 export default function Profilenav() {
+    const [highlight, setHighlight] = React.useState('profile');
     return (
         <nav className="profile-nav">
             <ul>
-                <li>
+                <li className={highlight === 'profile' ? 'active' : ''}>
                     <FontAwesomeIcon icon={faUser} />
-                    <Link to="/profile">Manage My Account</Link>
+                    <Link to="/profile" onClick={() => setHighlight('profile')}>Manage My Account</Link>
                 </li>
-                <li>
+                <li className={highlight === 'orders' ? 'active' : ''}>
                     <FontAwesomeIcon icon={faBox} />
-                    <p>My Orders</p>
+                    <Link to="/orders" onClick={() => setHighlight('orders')}>My Orders</Link>
                 </li>
-                <li>
+                <li className={highlight === 'cancellations' ? 'active' : ''}>
                     <FontAwesomeIcon icon={faXmark} />
-                    <p>My Cancellations</p>
+                    <Link to="/cancellations" onClick={() => setHighlight('cancellations')}>My Cancellations</Link>
                 </li>
-                <li>
+                <li className={highlight === 'reviews' ? 'active' : ''}>
                     <FontAwesomeIcon icon={faStar} />
-                    <p>My Reviews</p>
+                    <Link to="/reviews" onClick={() => setHighlight('reviews')}>My Reviews</Link>
                 </li>
-                <li>
+                <li className={highlight === 'logout' ? 'active' : ''}>
                     <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                    <p>Logout</p>
+                    <Link to="/logout" onClick={() => setHighlight('logout')}>Logout</Link>
                 </li>
             </ul>
         </nav>
