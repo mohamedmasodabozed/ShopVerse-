@@ -1,6 +1,7 @@
 import express from 'express'
 import userRouter from './Routes/user.routes.js'
 import productRouter from './Routes/product.routes.js'
+import cartRouter from './Routes/cart.routes.js'
 import dotenv from 'dotenv'
 import dbConnect from './config/db.js'
 import cors from 'cors'
@@ -27,6 +28,7 @@ dbConnect()
 
 app.use('/users',userRouter)
 app.use('/products',productRouter)
+app.use('/cart',cartRouter)
 
 
 

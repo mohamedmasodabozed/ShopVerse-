@@ -49,7 +49,13 @@ const productSchema = mongoose.Schema({
             type:String,
             required:true
         }
+    },
+    seller:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"userCollection",
+        required:true
     }
+
 
 }, {timestamps:true})
 

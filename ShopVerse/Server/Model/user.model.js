@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
         enum:['customer','seller','admin'], 
         required:true
     },
-    product_id:[{
+    products:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"productCollection"
     }]
