@@ -1,0 +1,129 @@
+.seller-products-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.seller-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.addCard {
+      display: flex
+;
+    align-items: center;
+    justify-content: flex-start;
+    background: #DB4444;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    padding: 5rem 20.5rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    gap: 1rem;
+    width: fit-content;
+        margin-bottom: 70px;
+}
+.addCard:hover {
+  background: #b32b2b;
+}
+
+.current-products {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.seller-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1.5rem;
+}
+.flash-sales-card {
+  background: #fafbfc;
+  border-radius: 10px;
+  box-shadow: 0 1.5px 6px rgba(0,0,0,0.04);
+  padding: 1rem 0.7rem 1.2rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.18s;
+  min-width: 200px;
+  max-width: 290px;
+  border: 1px solid #f0f0f0;
+}
+.flash-sales-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+.flash-sales-card .card-image-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+.flash-sales-card img {
+  width: 100%;
+  max-width: 140px;
+  height: 110px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #f5f5f5;
+  margin-bottom: 0.3rem;
+  border: 1px solid #f0f0f0;
+}
+.flash-sales-card .card-content {
+  width: 100%;
+  text-align: center;
+}
+.flash-sales-card h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0.3rem 0 0.2rem 0;
+  color: #222;
+}
+.flash-sales-card p {
+  font-size: 0.93rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+.flash-sales-card span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFF;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+.flash-sales-card .rating ul {
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.flash-sales-card .rating li {
+  color: #FFD700;
+  font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+  .seller-products-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .addCard {
+    width: 100%;
+    justify-content: center;
+  }
+}

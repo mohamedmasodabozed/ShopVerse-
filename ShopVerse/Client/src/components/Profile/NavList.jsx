@@ -1,19 +1,26 @@
-export default function NavList() { 
+import { Link } from "react-router-dom";
+
+export default function NavList({role}) { 
     return(
         <div className="profile-sidebar">
             <div className="profile-section">
                 <h3>Account</h3>
                 <ul className="nav-list">
                     <li>
-                        <a href="#" className="active">
+                        <Link to="/profile" className="active">
                             <i className="fas fa-user"></i> My Profile
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to="/orders">
                             <i className="fas fa-shopping-bag"></i> My Orders
-                        </a>
+                        </Link>
                     </li>
+                    {role ? <li>
+                        <Link to="/selling-products">
+                            <i className="fas fa-shopping-bag"></i> Selling Products
+                        </Link>
+                    </li> : null}
                     <li>
                         <a href="#">
                             <i className="fas fa-heart"></i> My Wishlist

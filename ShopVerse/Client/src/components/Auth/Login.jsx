@@ -48,7 +48,7 @@ export default function Login({isLoggedIn, setIsLoggedIn})
             }
             
             console.log('Login successful:', data);
-            
+            setIsLoggedIn(true);
             // Save token to localStorage or cookies
             localStorage.setItem('authToken', data.token);
             if(!isLoggedIn)
