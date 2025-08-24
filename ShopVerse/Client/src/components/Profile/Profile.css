@@ -1,0 +1,158 @@
+/* Profile page styling */
+.profile-container {
+    display: flex;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.profile-sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    margin-right: 2rem;
+}
+
+.profile-main {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.welcome-message {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.welcome-message h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-message p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.profile-section {
+    margin-bottom: 2rem;
+}
+
+.profile-section h3 {
+    font-size: 1.4rem;
+    color: #DB4444;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #DB4444;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-list li {
+    margin-bottom: 0.8rem;
+}
+
+.nav-list a {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    color: #555;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nav-list a:hover {
+    background-color: rgba(219, 68, 68, 0.1);
+    color: #DB4444;
+}
+
+.nav-list a.active {
+    background-color: #DB4444;
+    color: white;
+}
+
+.nav-list a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* Edit profile form styling */
+.edit-profile-form {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #DB4444;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(219, 68, 68, 0.2);
+}
+
+.save-button {
+    background-color: #DB4444;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: #c13838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .profile-sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+    }
+    
+    .welcome-message h2 {
+        font-size: 1.5rem;
+    }
+}

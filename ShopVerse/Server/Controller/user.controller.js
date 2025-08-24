@@ -35,7 +35,9 @@ export async function signIn(req, res) {
         if (!verifyPass) {
             return res.status(400).json({ Message: "Email or Password is Incorrect" });
         }
+
         let token = jwt.sign({ id: user._id,userName:user.userName, email: user.email, role: user.role },process.env.SECRET_TOKEN, { expiresIn: '10h' });
+
         res.json({ Message: "Success", Data: user, token: token });
     } catch (error) {
         res.status(400).json({ Message: `${error}` });

@@ -14,9 +14,12 @@ import Footer from './components/Footer/Footer.jsx'
 import SignUp from './components/Auth/SignUp'
 import Login from './components/Auth/Login'
 import ForgotPassword from './components/Auth/ForgotPassword'
+import Profile  from "./components/Profile/Profile.jsx"
+import SellingProducts from './components/Profile/sellingProducts.jsx';
 // Home component that contains all the main page content
 
 function Home({isLoggedIn}) {
+    
     // Flash Sales products data
     const flashSalesProducts = [
         {
@@ -191,6 +194,8 @@ function App() {
                 <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
                 <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} />} />
+                <Route path="/selling-products" element={<SellingProducts isLoggedIn={isLoggedIn} />} />
             </Routes>
         </Router>
     )
