@@ -2,7 +2,7 @@ import { productCollection } from '../Model/product.model.js'
 import { userCollection } from '../Model/user.model.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-export async function signUp(req, res) {
+export async function signUp(req, res,next) {
     try {
         let body = req.body;
         // Defensive: ensure userName is present
@@ -10,7 +10,9 @@ export async function signUp(req, res) {
             return res.status(400).json({ Message: "Missing required fields" });
         }
         let user = await userCollection.create(body);
-        res.json({ Message: "Success", Data: user });
+        req.user = user
+        next()
+        // res.json({ Message: "Success", Data: user });
     } catch (error) {
         // Always return a valid JSON response
         res.status(400).json({ Message: `${error}` });
@@ -33,7 +35,9 @@ export async function signIn(req, res) {
         if (!verifyPass) {
             return res.status(400).json({ Message: "Email or Password is Incorrect" });
         }
-        let token = jwt.sign({ id: user._id,name : user.name, email: user.email, role: user.role },process.env.SECRET_TOKEN, { expiresIn: '10h' });
+
+        let token = jwt.sign({ id: user._id,userName:user.userName, email: user.email, role: user.role },process.env.SECRET_TOKEN, { expiresIn: '10h' });
+
         res.json({ Message: "Success", Data: user, token: token });
     } catch (error) {
         res.status(400).json({ Message: `${error}` });
