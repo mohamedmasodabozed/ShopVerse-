@@ -22,10 +22,12 @@ export default function SellingProducts({ isLoggedIn }) {
     let price = 100;
     let rating = 4.5;
     let discountPercentage = 10;
-
     const [activeLink, setActiveLink] = useState('selling-products');
     fetch("http://localhost:3000/products", {
         method: "GET",
+        headers:{
+            Authorization:token
+        }
 
     }).then((data) => data.json()).then((products) => {
         console.log(products);
