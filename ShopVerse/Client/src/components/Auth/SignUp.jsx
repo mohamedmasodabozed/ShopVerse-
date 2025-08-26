@@ -65,6 +65,7 @@ export default function SignUp() {
         data = await response.json();
       } catch (e) {
         // If response is empty or not JSON, set a generic error
+        e.Error && setError(e.Error);
         throw new Error('Server error: Invalid response');
       }
       if (!response.ok) {

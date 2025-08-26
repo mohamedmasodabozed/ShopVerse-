@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import {jwtDecode} from "jwt-decode";
 
 const categories = [
   "Woman's Fashion",
@@ -21,6 +22,8 @@ export default function ProductForm({ isLoggedIn, onClose }) {
     const [productPrice, setProductPrice] = useState("");
     const [productDiscount, setProductDiscount] = useState("");
     const [productQuantity, setProductQuantity] = useState("");
+    let token = localStorage.getItem("authToken");
+    let decryptedToken = token ? jwtDecode(token) : {};
     function showPopup(message) {
         setTimeout(() => {
             return (<h1>{message}</h1>)
@@ -41,7 +44,10 @@ export default function ProductForm({ isLoggedIn, onClose }) {
         formData.append('productQuantity', productQuantity);
         fetch("http://localhost:3000/products", {
             method: "POST",
-            body: formData
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
         })
         .then(response => response.json())
         .then(data => {

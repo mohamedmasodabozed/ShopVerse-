@@ -1,6 +1,15 @@
 
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+// Route guard for pages only for guests (not logged in)
+function GuestRoute({ isLoggedIn, children }) {
+    return isLoggedIn ? <Navigate to="/profile" replace /> : children;
+}
+
+// Route guard for pages only for authenticated users
+function PrivateRoute({ isLoggedIn, children }) {
+    return isLoggedIn ? children : <Navigate to="/login" replace />;
+}
 import './App.css'
 import Header from './components/Header.jsx'
 import Advertisement from './components/Advirtise/Advertisement.jsx'
@@ -186,19 +195,48 @@ function Home({isLoggedIn}) {
 }
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
-                <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
-                <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} />} />
-                <Route path="/selling-products" element={<SellingProducts isLoggedIn={isLoggedIn} />} />
-            </Routes>
-        </Router>
-    )
+        const [isLoggedIn, setIsLoggedIn] = React.useState(() => {
+                // Check localStorage for auth token on initial load
+                return !!localStorage.getItem('authToken');
+        });
+
+        // Keep isLoggedIn in sync with localStorage (for login/logout)
+        React.useEffect(() => {
+                const handleStorage = () => {
+                        setIsLoggedIn(!!localStorage.getItem('authToken'));
+                };
+                window.addEventListener('storage', handleStorage);
+                return () => window.removeEventListener('storage', handleStorage);
+        }, []);
+
+        return (
+                <Router>
+                        <Routes>
+                                <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                                <Route path="/signup" element={
+                                    <GuestRoute isLoggedIn={isLoggedIn}>
+                                        <SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                                    </GuestRoute>
+                                } />
+                                <Route path="/login" element={
+                                    <GuestRoute isLoggedIn={isLoggedIn}>
+                                        <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                                    </GuestRoute>
+                                } />
+                                <Route path="/forgot-password" element={<ForgotPassword />} />
+                                <Route path="/profile" element={
+                                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                                        <Profile isLoggedIn={isLoggedIn} />
+                                    </PrivateRoute>
+                                } />
+                                <Route path="/selling-products" element={
+                                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                                        <SellingProducts isLoggedIn={isLoggedIn} />
+                                    </PrivateRoute>
+                                } />
+                        </Routes>
+                </Router>
+        )
 }
 
 export default App

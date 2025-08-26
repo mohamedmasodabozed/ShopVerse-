@@ -17,16 +17,12 @@ export default function SellingProducts({ isLoggedIn }) {
             role = "";
         }
     }
-    let image = "https://i.dummyjson.com/data/products/1/thumbnail.jpg"; 
     let title = "Product Title";
     let description = "Product Description";
     let price = 100;
     let rating = 4.5;
     let discountPercentage = 10;
-    function showForm() {
-        console.log("Show form");
 
-    }
     const [activeLink, setActiveLink] = useState('selling-products');
     return (
         <div>

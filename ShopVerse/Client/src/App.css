@@ -12,8 +12,16 @@ html, body {
   box-sizing: inherit;
 }
 
-/* Styling for SignUp component */
-.container {
+
+/* Home page container (use this for homepage sections) */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Auth forms container (SignUp, Login, etc.) */
+.form-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -28,8 +36,7 @@ html, body {
   overflow: hidden;
   gap: 30px;
 }
-
-.container img {
+.form-container img {
   width: 100%;
   max-width: 500px;
   height: auto;
@@ -41,14 +48,12 @@ html, body {
   min-width: 300px;
   height: 107vh;
 }
-
-.container img:hover {
+.form-container img:hover {
   transform: scale(1.02) translateY(-5px);
   box-shadow: 0 15px 35px rgba(219, 68, 68, 0.25);
   filter: brightness(1.05);
 }
-
-.container form h1 {
+.form-container form h1 {
   font-size: 24px;
   color: #333;
   margin-bottom: 30px;
@@ -56,8 +61,7 @@ html, body {
   position: relative;
   padding-bottom: 10px;
 }
-
-.container form {
+.form-container form {
   width: 100%;
   max-width: 500px;
   padding: 35px;
@@ -70,18 +74,15 @@ html, body {
   min-width: 300px;
   transition: all 0.4s ease;
 }
-
-.container form:hover {
+.form-container form:hover {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
   transform: translateY(-3px);
 }
-
-.container form:focus-within {
+.form-container form:focus-within {
   box-shadow: 0 15px 30px rgba(219, 68, 68, 0.15);
   border-left: 5px solid #c93333;
 }
-
-.container form h1::after {
+.form-container form h1::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -92,8 +93,7 @@ html, body {
   background-color: #DB4444;
   border-radius: 2px;
 }
-
-.container form label {
+.form-container form label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
@@ -101,22 +101,18 @@ html, body {
   font-size: 15px;
   transition: all 0.3s ease;
 }
-
-.container form input:focus + label,
-.container form select:focus + label {
+.form-container form input:focus + label,
+.form-container form select:focus + label {
   color: #DB4444;
   font-weight: 600;
 }
-
-/* Use siblings combinator to style label when input is focused */
-.container form input:focus ~ label,
-.container form select:focus ~ label {
+.form-container form input:focus ~ label,
+.form-container form select:focus ~ label {
   color: #DB4444;
   transform: translateX(3px);
 }
-
-.container form input,
-.container form select {
+.form-container form input,
+.form-container form select {
   width: 100%;
   padding: 14px 16px;
   margin-bottom: 22px;
@@ -127,24 +123,21 @@ html, body {
   background-color: #f9f9f9;
   transition: all 0.3s ease;
 }
-
-.container form input:focus,
-.container form select:focus {
+.form-container form input:focus,
+.form-container form select:focus {
   outline: none;
   border-color: #DB4444;
   background-color: #fff;
   box-shadow: 0 0 0 3px rgba(219, 68, 68, 0.1);
 }
-
-.container form input:hover,
-.container form select:hover {
+.form-container form input:hover,
+.form-container form select:hover {
   border-color: #c93333;
   background-color: #fff;
   box-shadow: 0 0 8px rgba(219, 68, 68, 0.15);
   transform: translateY(-1px);
 }
-
-.container form .error-message {
+.form-container form .error-message {
   background-color: rgba(255, 0, 0, 0.1);
   color: #e41111;
   padding: 12px;
@@ -154,76 +147,64 @@ html, body {
   border-left: 3px solid #e41111;
   animation: fadeIn 0.3s ease-in;
 }
-
-.container form button:disabled {
+.form-container form button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   box-shadow: none;
 }
-
-.container form button:disabled:hover {
+.form-container form button:disabled:hover {
   background-color: #ccc;
   transform: none;
   box-shadow: none;
 }
-
-.container form .forgot-password {
+.form-container form .forgot-password {
   text-align: right;
   margin: -15px 0 20px 0;
 }
-
-.container form .forgot-password a {
+.form-container form .forgot-password a {
   color: #777;
   font-size: 13px;
   text-decoration: none;
   transition: all 0.3s ease;
 }
-
-.container form .forgot-password a:hover {
+.form-container form .forgot-password a:hover {
   color: #DB4444;
   text-decoration: underline;
 }
-
-.container form .reset-instructions {
+.form-container form .reset-instructions {
   margin-bottom: 25px;
   text-align: center;
   color: #555;
   font-size: 15px;
   line-height: 1.5;
 }
-
-.container form .success-message {
+.form-container form .success-message {
   text-align: center;
   padding: 20px 0;
 }
-
-.container form .success-message p {
+.form-container form .success-message p {
   margin-bottom: 25px;
   color: #555;
   line-height: 1.5;
 }
-
-.container form p {
+.form-container form p {
   margin-top: 20px;
   text-align: center;
   font-size: 14px;
   color: #666;
 }
-
-.container form a {
+.form-container form a {
   color: #DB4444;
   text-decoration: none;
   font-weight: 600;
   margin-left: 5px;
   transition: all 0.3s ease;
 }
-
-.container form a:hover {
+.form-container form a:hover {
   color: #c93333;
   text-decoration: underline;
 }
-
-.container form button {
+.form-container form button {
   width: 100%;
   padding: 15px;
   background-color: #DB4444;
@@ -239,14 +220,12 @@ html, body {
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(219, 68, 68, 0.3);
 }
-
-.container form button:hover {
+.form-container form button:hover {
   background-color: #c93333;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(219, 68, 68, 0.4);
 }
-
-.container form button:hover::after {
+.form-container form button:hover::after {
   content: '';
   position: absolute;
   top: 0;
@@ -256,8 +235,7 @@ html, body {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
-
-.container form button:active {
+.form-container form button:active {
   transform: translateY(1px);
   box-shadow: 0 2px 10px rgba(219, 68, 68, 0.3);
 }
@@ -616,7 +594,7 @@ nav {
     position: absolute;
     top: 100%;
     right: 0;
-    width: 225px;
+    width: 25vw !important;
     min-height: 209px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
@@ -633,6 +611,7 @@ nav {
     transform-origin: top right;
     padding: 16px 12px;
     box-sizing: border-box;
+    width: 25vw;
 }
 
 @keyframes fadeInUp {
@@ -671,7 +650,7 @@ nav {
     flex: 1;
     min-height: 36px;
     box-sizing: border-box;
-    width: 100%;
+    width:22vw;
 }
 
 .profile-nav li:hover {
@@ -938,7 +917,7 @@ nav {
 }
 
 .advertisement ul li a {
-    text-decoration: none;
+   text-decoration: none;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -946,6 +925,8 @@ nav {
     line-height: 24px;
     color: #333;
     transition: color 0.3s ease-in-out;
+    width: 178px;
+    text-wrap: wrap;
 }
 
 .advertisement ul li a:hover {
