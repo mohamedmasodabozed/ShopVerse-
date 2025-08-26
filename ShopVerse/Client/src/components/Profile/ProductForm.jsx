@@ -14,7 +14,7 @@ const categories = [
   "Health & Beauty"
 ];
 
-export default function ProductForm({ isLoggedIn, onClose }) {
+export default function ProductForm({ isLoggedIn, onClose, onProductAdded }) {
     const [image, setImage] = useState(null);
     const [productName, setProductName] = useState("");
     const [productDescription, setProductDescription] = useState("");
@@ -22,6 +22,7 @@ export default function ProductForm({ isLoggedIn, onClose }) {
     const [productPrice, setProductPrice] = useState("");
     const [productDiscount, setProductDiscount] = useState("");
     const [productQuantity, setProductQuantity] = useState("");
+    const [productAdded , setProductAdded] = useState(false);
     let token = localStorage.getItem("authToken");
     let decryptedToken = token ? jwtDecode(token) : {};
     function showPopup(message) {
@@ -52,12 +53,14 @@ export default function ProductForm({ isLoggedIn, onClose }) {
         .then(response => response.json())
         .then(data => {
             console.log("Success:", data);
+            if (onProductAdded) onProductAdded();
             if (onClose) onClose();
         })
         .catch((error) => {
             console.error("Error:", error);
         });
         showPopup("Product added successfully!");
+        setProductAdded(true);
     }
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles && acceptedFiles[0]) {

@@ -4,10 +4,12 @@ import Header from "../Header";
 import "./sellingProducts.css";
 import mockImage from "../../assets/istockphoto-1409329028-1024x1024.jpg"
 import ProductForm from "./ProductForm";
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+
 export default function SellingProducts({ isLoggedIn }) {
     let token = localStorage.getItem("authToken");
     let role = "";
+    const [products, setProducts] = useState([]);
     const [shown, setShown] = useState(false);
     if (token) {
         try {
@@ -17,21 +19,28 @@ export default function SellingProducts({ isLoggedIn }) {
             role = "";
         }
     }
-    let title = "Product Title";
-    let description = "Product Description";
-    let price = 100;
-    let rating = 4.5;
-    let discountPercentage = 10;
-    const [activeLink, setActiveLink] = useState('selling-products');
-    fetch("http://localhost:3000/products", {
-        method: "GET",
-        headers:{
-            Authorization:token
-        }
 
-    }).then((data) => data.json()).then((products) => {
-        console.log(products);
-    });
+    const [activeLink, setActiveLink] = useState('selling-products');
+
+    const fetchProducts = useCallback(() => {
+        if (token) {
+            fetch("http://localhost:3000/products", {
+                method: "GET",
+                headers: {
+                    Authorization: token
+                }
+            })
+            .then((data) => data.json())
+            .then((products) => {
+                setProducts(products);
+            });
+        }
+    }, [token]);
+
+    useEffect(() => {
+        fetchProducts();
+    }, [fetchProducts]);
+    
     return (
         <div>
             <Header isLoggedIn={!!token} />
@@ -44,14 +53,19 @@ export default function SellingProducts({ isLoggedIn }) {
                         <span>+</span>
                     </div>
                     <div className="current-products">
-                        <Card  image={mockImage}
-                                title={title}
-                                description={description}
-                                price={price}
-                                rating={rating}
-                                discountPercentage={discountPercentage}
-                        />
-                        {shown ? <ProductForm isLoggedIn={isLoggedIn} onClose={() => setShown(false)} /> : null}
+                        {console.log(`products:${(products)}`)}
+                        {products.map((product) => (
+                            console.log(`product this is product pig:${JSON.stringify(product)}`),
+                            <Card key={product._id}
+                                image={product.productImage.URL || mockImage}
+                                title={product.productName}
+                                description={product.productDescription}
+                                price={product.productPrice}
+                                rating={product.productRating}
+                                discountPercentage={product.productDiscount}
+                            />
+                        ))}
+                        {shown ? <ProductForm isLoggedIn={isLoggedIn} onClose={() => setShown(false)} onProductAdded={fetchProducts} /> : null}
                     </div>
                 </div>
             </div>
