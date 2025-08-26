@@ -27,11 +27,11 @@ const userSchema = mongoose.Schema({
         type:String,
         enum:['customer','seller','admin'], 
         required:true
-    },
-    products:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"productCollection"
-    }]
+    }
+    // products:[{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:"productCollection"
+    // }]
 
 }, {timestamps:true})
 

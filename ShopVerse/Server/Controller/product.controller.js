@@ -4,16 +4,15 @@ import { userCollection } from '../Model/user.model.js'
 
 
 export async function createProduct(req,res){
-    console.log("PLEASe")
     try{
         //From authentication middleware
-        // sellerId = req.user._id
-        let sellerId = "68ab692a4a6e397ea82f04c5"
+        let sellerId = req.user._id
+        
         let body = req.body
         if(!body || !req.file) res.status(400).json({Message:"Error bad request"})
         const product = {
             ...body,
-            seller:seller,
+            seller:sellerId,
             productImage:{
                 URL:req.file.path,
                 ID:req.file.filename
@@ -31,10 +30,24 @@ export async function createProduct(req,res){
 
 export async function getSellerProducts(req,res){
     try{
-        // sellerId = req.user._id
-        sellerId = "68ab734e1e6ccb2aab0b1cdb"
-        let products = await userCollection.find({_id:sellerId},{products:1}).populate("products")
+        let sellerId = req.user._id
+        let products = await productCollection.find({seller:sellerId})
+        if(!products) res.status(404).json({Message:"You do not have any products"})
         res.json(products)
+    }catch(error){
+        res.status(400).json({Message:`${error}`})
+    }
+}
+
+export async function getProductById(req,res){
+    try{
+        let productId = req.params.productId
+
+        let product = await productCollection.findById(productId).populate("seller")
+        if(!product) res.status(404).json({Message:"Product Not Found"})
+        
+        res.json({Message:"Success",Data:product})
+
     }catch(error){
         res.status(400).json({Message:`${error}`})
     }
