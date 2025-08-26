@@ -22,6 +22,7 @@ import NewArrival from './components/NewArrival/NewArrival.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import SignUp from './components/Auth/SignUp'
 import Login from './components/Auth/Login'
+import Logout from './components/Auth/Logout'
 import ForgotPassword from './components/Auth/ForgotPassword'
 import Profile  from "./components/Profile/Profile.jsx"
 import SellingProducts from './components/Profile/sellingProducts.jsx';
@@ -224,6 +225,7 @@ function App() {
                                     </GuestRoute>
                                 } />
                                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                                <Route path="/logout" element={<Logout setIsLoggedIn={setIsLoggedIn} />} />
                                 <Route path="/profile" element={
                                     <PrivateRoute isLoggedIn={isLoggedIn}>
                                         <Profile isLoggedIn={isLoggedIn} />

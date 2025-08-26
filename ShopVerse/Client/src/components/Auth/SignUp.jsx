@@ -85,7 +85,7 @@ export default function SignUp() {
   return (
     <div>
       <Header />
-      <div className="container">
+      <div className="form-container">
         <img src={Img} alt="Shopping illustration" />
         <form onSubmit={handleSubmit}>
           <h1>Create An Account</h1>

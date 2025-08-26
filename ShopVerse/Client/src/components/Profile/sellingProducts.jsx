@@ -24,6 +24,12 @@ export default function SellingProducts({ isLoggedIn }) {
     let discountPercentage = 10;
 
     const [activeLink, setActiveLink] = useState('selling-products');
+    fetch("http://localhost:3000/products", {
+        method: "GET",
+
+    }).then((data) => data.json()).then((products) => {
+        console.log(products);
+    });
     return (
         <div>
             <Header isLoggedIn={!!token} />

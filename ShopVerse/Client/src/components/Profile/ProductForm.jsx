@@ -46,7 +46,7 @@ export default function ProductForm({ isLoggedIn, onClose }) {
             method: "POST",
             body: formData,
             headers: {
-                'Authorization': `Bearer ${token}`,
+                Authorization: token,
             }
         })
         .then(response => response.json())

@@ -70,7 +70,7 @@ export default function Login({isLoggedIn, setIsLoggedIn})
     return(
         <div>
             <Header />
-            <div className="container">
+            <div className="form-container">
                 <img src={Img} alt="Login illustration" />
                 <form onSubmit={handleSubmit}>
                     <h1>Login to Your Account</h1>
