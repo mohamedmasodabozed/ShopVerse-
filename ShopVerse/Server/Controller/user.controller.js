@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 export async function signUp(req, res,next) {
     try {
         let body = req.body;
-        // Defensive: ensure userName is present
+        
         if (!body.userName || !body.email || !body.password || !body.role) {
             return res.status(400).json({ Message: "Missing required fields" });
         }
@@ -14,8 +14,8 @@ export async function signUp(req, res,next) {
         next()
         // res.json({ Message: "Success", Data: user });
     } catch (error) {
-        // Always return a valid JSON response
-        res.status(400).json({ Message: `${error}` });
+        
+        return res.status(400).json({ Message: `${error}` });
     }
 
 }
@@ -38,8 +38,8 @@ export async function signIn(req, res) {
 
         let token = jwt.sign({ id: user._id,userName:user.userName, email: user.email, role: user.role },process.env.SECRET_TOKEN, { expiresIn: '10h' });
 
-        res.json({ Message: "Success", Data: user, token: token });
+        return res.json({ Message: "Success", Data: user, token: token });
     } catch (error) {
-        res.status(400).json({ Message: `${error}` });
+        return res.status(400).json({ Message: `${error}` });
     }
 }

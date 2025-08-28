@@ -22,7 +22,7 @@ export async function authenticate(req, res, next) {
 export function restricto(...roles){
 
     return function check(req,res,next){
-        console.log(req.user.role)
+        
         if(!roles.includes(req.user.role)) return res.status(401).json({Message:"Unauthorized"})
         next()
     }
