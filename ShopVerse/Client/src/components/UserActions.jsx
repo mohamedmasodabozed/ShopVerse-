@@ -4,6 +4,7 @@ import WishlistIcon from './WishlistIcon.jsx';
 import CartIcon from './CartIcon.jsx';
 import Profile from './Profile.jsx';
 import Profilenav from './Profilenav.jsx';
+import { Link } from 'react-router-dom';
 
 export default function UserActions({ loggedIn }) {
     const [isHovered, setIsHovered] = React.useState(false);
@@ -23,7 +24,7 @@ export default function UserActions({ loggedIn }) {
             <ul>
                 <SearchBar />
                 {loggedIn ? <WishlistIcon /> : null}
-                {loggedIn ? <CartIcon /> : null}
+                {loggedIn ? <Link to="/cart"><CartIcon /></Link> : null}
                 {loggedIn ? (
                     <li className="profile-wrapper" 
                         onMouseEnter={handleMouseEnter}

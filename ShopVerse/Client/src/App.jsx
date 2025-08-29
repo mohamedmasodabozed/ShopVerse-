@@ -26,6 +26,7 @@ import Logout from './components/Auth/Logout'
 import ForgotPassword from './components/Auth/ForgotPassword'
 import Profile  from "./components/Profile/Profile.jsx"
 import SellingProducts from './components/Profile/sellingProducts.jsx';
+import Maincart from './components/Cart/mainCart.jsx';
 // Home component that contains all the main page content
 
 function Home({isLoggedIn}) {
@@ -236,6 +237,7 @@ function App() {
                                         <SellingProducts isLoggedIn={isLoggedIn} />
                                     </PrivateRoute>
                                 } />
+                                <Route path="/cart" element={<Maincart />} />
                         </Routes>
                 </Router>
         )
