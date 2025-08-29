@@ -1,5 +1,5 @@
 import express from 'express'
-import { addToCart, createCart, getCartLen, removeFromCart } from '../Controller/cart.controller.js'
+import { addToCart, createCart, getCartItems, getCartLen, removeFromCart } from '../Controller/cart.controller.js'
 import {authenticate,restricto} from '../Middlewares/authenticate.middleware.js'
 const router = express.Router()
 
@@ -9,6 +9,7 @@ router.patch('/add/:productId',authenticate , restricto('customer','seller'),add
 
 router.patch('/remove/:productId',authenticate , restricto('customer','seller'),removeFromCart)
 
-router.get('/',authenticate , restricto('customer','seller'),getCartLen)
+router.get('/',authenticate , restricto('customer','seller'),getCartItems)
+router.get('/length',authenticate , restricto('customer','seller'),getCartLen)
 
 export default router
