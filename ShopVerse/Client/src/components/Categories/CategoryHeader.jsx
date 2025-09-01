@@ -5,6 +5,6 @@ export default function CategoryHeader() {
         <div className="flash-sales-header">
             <FlashSalesHeaderText title="Browse By Category" />
             <Arrows />       
-             </div>
+            </div>
     );
 }

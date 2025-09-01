@@ -1,77 +1,140 @@
 import Header from "../Header";
 import Footer from "../Footer/Footer";
-export default function Maincart() {
+import "./Cart.css";
+import { useState } from "react";
+export default function Maincart() 
+{
+  // Removed old exampleForReturn and counter logic
+  // Removed old counter state and handleIncrease; now handled per item below
+        const initialCartItems = [
+          {
+            id: 1,
+            title: "Wireless Headphones",
+            price: 120,
+            image: "https://picsum.photos/200",
+            quantity: 1,
+            shipping : 5.99
+          },
+          {
+            id: 2,
+            title: "Smartph one Case",
+            price: 25,
+            image: "https://picsum.photos/200",
+            quantity: 1,
+            shipping : 5.99
+          },
+          {
+            id: 3,
+            title: "Smart Watch",
+            price: 250,
+            image: "https://picsum.photos/200",
+            quantity: 1,
+            shipping : 5.99
+          },
+        ];
+        const [cartItems, setCartItems] = useState(initialCartItems);
+
+        const handleIncrease = (index) => {
+          setCartItems((prevItems) =>
+            prevItems.map((item, i) =>
+              i === index ? { ...item, quantity: item.quantity + 1 } : item
+            )
+          );
+        };
+        const getShippingCost = () => {
+          return cartItems.reduce((acc, item) => acc + item.shipping, 0);
+        };
+        const handleDecrease = (index) => {
+          setCartItems((prevItems) =>
+            prevItems.map((item, i) =>
+              i === index && item.quantity > 1
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+            )
+          );
+        };
+        const subtotalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  // Removed leftover old counter decrement logic
   return (
     <div>
       <Header isLoggedIn={true} />
-     <div className="container">
-        <ul className="cart-header">
-            <li>product</li>
-            <li>price</li>
-            <li>quantity</li>
-            <li>total</li>
-        </ul>
-        <ul className="cart-items">
-            <li>
-                <div className="product">
-                <img src="https://picsum.photos/200" alt="" />
-                <p>product name</p>
-                </div>
-                <p>120$</p>
-                <input type="number" min="1" defaultValue="1" />
-                <p>120$</p>
-            </li>
-            <li>
-                <div className="product">
-                    <img src="https://picsum.photos/200" alt="" />
-                    <p>product name</p>
-                </div>
-                <p>120$</p>
-                <input type="number" min="1" defaultValue="1" />
-                <p>120$</p>
+      <div className="cart-page-container">
+        <h1 className="cart-title">Shopping Cart</h1>
+        
+        <div className="cart-content">
+          <div className="cart-items-container">
+            <table className="cart-table">
+              <thead>
+                <tr>
+                  <th className="product-col">Product</th>
+                  <th className="price-col">Price</th>
+                  <th className="quantity-col">Quantity</th>
+                  <th className="total-col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartItems.map((item, index) => (
+                  <tr key={item.id}>
+                    <td className="product-info">
+                      <div className="product-image">
+                        <img src={item.image} alt="Product" />
+                      </div>
+                      <div className="product-details">
+                        <h3>{item.title}</h3>
+                        <p className="product-category">Electronics</p>
+                      </div>
+                    </td>
+                    <td className="price-col">${item.price.toFixed(2)}</td>
+                    <td className="quantity-col">
+                      <div className="quantity-control">
+                        <button className="quantity-btn decrease" onClick={() => handleDecrease(index)}>-</button>
+                        <input type="number" min="1" value={item.quantity} readOnly />
+                        <button className="quantity-btn increase" onClick={() => handleIncrease(index)}>+</button>
+                      </div>
+                    </td>
+                    <td className="total-col">${(item.price * item.quantity).toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             
-            </li>
-            <li>
-                <div className="product">
-                    <img src="https://picsum.photos/200" alt="" />
-                    <p>product name</p>
-                </div>
-                <p>120$</p>
-                <input type="number" min="1" defaultValue="1" />
-                <p>120$</p>
-            </li>
-        </ul>
-        <div className="buttons cart-buttons">
-            <button>update shop</button>
-            <button>return to cart</button>
-        </div>
-        <div className="payment">
-            <div className="add-coupon">
-                <form action="#">
-                    <input type="text" placeholder="Enter coupon code" />
-                    <button type="submit">Apply</button>
-                </form>
+            <div className="cart-actions">
+              <button className="continue-shopping">Continue Shopping</button>
+              <button className="update-cart">Update Cart</button>
             </div>
-            <div className="cart-total">
-                <div className="subtotal">
-                    <p>Subtotal:</p>
-                    <p>$360</p>
-                </div>
-                <div className="shipping">
-                    <p>Shipping:</p>
-                    <p>$10</p>
-                </div>
-                <div className="total">
-                    <p>Total:</p>
-                    <p>$370</p>
-                </div>
-                <div className="buttons">
-                    <button>Proceed to Checkout</button>
-                </div>
+          </div>
+          
+          <div className="cart-summary">
+            <h2>Order Summary</h2>
+            
+            <div className="coupon-section">
+              <h3>Apply Coupon</h3>
+              <div className="coupon-form">
+                <input type="text" placeholder="Enter coupon code" />
+                <button type="submit">Apply</button>
+              </div>
             </div>
+            
+            <div className="summary-details">
+              <div className="summary-row">
+                <span>Subtotal</span>
+                <span className="amount">${subtotalAmount.toFixed(2)}</span>
+              </div>
+              <div className="summary-row">
+                <span>Shipping</span>
+                <span className="amount">${getShippingCost().toFixed(2)}</span>
+              </div>
+              <div className="summary-row total">
+                <span>Total</span>
+                <span className="amount">${(subtotalAmount + getShippingCost()).toFixed(2)}</span>
+              </div>
+              
+              <button className="checkout-button">Proceed to Checkout</button>
+            </div>
+          </div>
         </div>
-     </div>
-     <Footer />
+      </div>
+      <Footer />
     </div>
   );
 }

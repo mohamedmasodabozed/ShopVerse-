@@ -24,7 +24,7 @@ export default function AdvertiseArea(props) {
     return (
         <div className="advertise-area">
             <img src={imgSrcs[currentIndex]} alt="Place Holder" />
-            { <ul>
+            {props.show && <ul>
                 {imgSrcs.map((src, index) => (
                     <Dot key={index} active={index === currentIndex} onClick={() => handleDotClick(index)} />
                 ))} 

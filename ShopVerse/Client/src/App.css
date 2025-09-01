@@ -3108,7 +3108,6 @@ footer {
     display: flex
 ;
     justify-content: space-evenly;
-    box-shadow: 1px 1px 1px 1px #4a4a4a4a;
     padding: 20px 10px;
     margin-right: 40px;
     margin-left: 40px;
@@ -3250,4 +3249,25 @@ footer {
 }
 .cart-total .buttons button:hover {
     background-color: #c13838;
+}
+.cart-items .specials 
+{
+  display: flex;
+  flex-direction: row;
+}
+.container ul.cart-items .specials li.special
+{
+  box-shadow: none;
+  
+}
+.container ul.cart-items .specials 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    box-shadow: 1px 1px 1px 1px #4a4a4a4a;
+    width: 90.6vw;
+    position: relative;
+    left: -10px;
+    padding: 10px 20px;
 }

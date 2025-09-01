@@ -50,7 +50,6 @@ export default function Categories() {
                     <CategoriesCard key={index} icon={icon.imgsrc} title={icon.title} />
                 ))}
             </ul>
-            <Separator />
         </div>
     );
 }
