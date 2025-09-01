@@ -47,6 +47,7 @@ export default function FlashSalesBody(props)
                 {products.map((product, index) => (
                     <Card 
                         key={index}
+                        id={product.id || `flash-product-${index}`}  // Add a unique ID for each product
                         image={product.image}
                         title={product.title}
                         description={product.description}

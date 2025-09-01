@@ -56,7 +56,9 @@ export default function SellingProducts({ isLoggedIn }) {
                         {console.log(`products:${(products)}`)}
                         {products.map((product) => (
                             console.log(`product this is product pig:${JSON.stringify(product)}`),
-                            <Card key={product._id}
+                            <Card
+                                key={product._id}
+                                id={product._id}
                                 image={product.productImage.URL || mockImage}
                                 title={product.productName}
                                 description={product.productDescription}
