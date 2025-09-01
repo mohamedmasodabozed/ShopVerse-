@@ -25,14 +25,18 @@ cartSchema.pre('findOneAndUpdate', async function (next) {
 
         const obj = this.getFilter()
         const update = this.getUpdate()
+        console.log(update)
         if (!update['$inc']) {
             next()
         }
+
         const addedQuantity = update['$inc']['products.$.quantity']
         const productId = obj['products.product']
         let product = await productCollection.findOne({ _id: productId })
         let cartProduct = await cartCollection.findOne({ user: obj.user })
+        // console.log(cartProduct)
         let filtered = cartProduct.products.filter((product) => product.product == productId)
+        // console.log(filtered)
         if (filtered[0].quantity + addedQuantity <= product.productQuantity) next()
         else {
             return next(new Error("Quantity Exceeds Product Quantity"))
