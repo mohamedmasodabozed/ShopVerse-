@@ -27,14 +27,6 @@ const productSchema = mongoose.Schema({
         max:100
     },
 
-    isDiscount:{
-        type:Boolean
-    },
-
-    //discounted price will be calculated in the API and updated to the database
-    discountedPrice:{
-        type:Number
-    },
 
     productQuantity:{
         type:Number,
@@ -60,4 +52,11 @@ const productSchema = mongoose.Schema({
 }, {timestamps:true})
 
 
+productSchema.virtual('finalPrice').get( function (){
+    if(!this.productDiscount && !this.productDiscount > 0) return this.productPrice
+    return this.productPrice - (this.productPrice * this.productDiscount/100)
+})
+
+productSchema.set('toJSON',{virtuals:true})
+// productSchema.set("toObject", { virtuals: true });
 export const productCollection = mongoose.model("productCollection",productSchema)
