@@ -25,13 +25,17 @@ export async function addToCart(req, res) {
 
         let productExists = await productCollection.findById(productId)
         if (!productExists) return res.status(404).json({ Message: "Product doesn't exist" })
+        let cartProductExists = await cartCollection.findOne({ user: userId, "products.product": productId })
 
-        updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId }, { $inc: { "products.$.quantity": quantity } }, { new: true })
-        // console.log(updatedCart)
-        if (!updatedCart) {
+        if (cartProductExists) {
+            updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId }, { $inc: { "products.$.quantity": quantity } }, { new: true })
+            console.log(updatedCart)
+        }
+
+        else if (!updatedCart) {
             updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, {
                 $push: { products: { product: productId, quantity: quantity } }
-                }, { new: true })
+            }, { new: true })
         }
         return res.json({ Message: "Success", Data: updatedCart })
     } catch (error) {
@@ -58,28 +62,28 @@ export async function removeFromCart(req, res) {
 }
 
 
-export async function getCartLen(req,res){
-    try{
+export async function getCartLen(req, res) {
+    try {
         let userId = req.user._id
-        let userCart = await cartCollection.findOne({user:userId})
-        if(!userCart) return res.status(404).json({Message:"User Cart Not Found"})
+        let userCart = await cartCollection.findOne({ user: userId })
+        if (!userCart) return res.status(404).json({ Message: "User Cart Not Found" })
         let cartLen = userCart.products.length
         console.log(cartLen)
-        return res.json({Message:"Success",Length:cartLen})
-    }catch(error){
-        return res.status(400).json({Message:`${error}`})
+        return res.json({ Message: "Success", Length: cartLen })
+    } catch (error) {
+        return res.status(400).json({ Message: `${error}` })
     }
 }
 
-export async function getCartItems(req,res){
-    try{
+export async function getCartItems(req, res) {
+    try {
         let userId = req.user._id
-        let userCart = await cartCollection.findOne({user:userId}).populate("products")
-        if(!userCart) return res.status(404).json({Message:"User Cart Not Found"})
+        let userCart = await cartCollection.findOne({ user: userId }).populate("products")
+        if (!userCart) return res.status(404).json({ Message: "User Cart Not Found" })
 
-        return res.json({Message:"Success",Data:userCart})
-    }catch(error){
-        return res.status(400).json({Message:`${error}`})
+        return res.json({ Message: "Success", Data: userCart })
+    } catch (error) {
+        return res.status(400).json({ Message: `${error}` })
     }
 }
 

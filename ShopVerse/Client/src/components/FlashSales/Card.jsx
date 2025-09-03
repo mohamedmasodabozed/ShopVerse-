@@ -19,7 +19,15 @@ export default function Card(props) {
         }
         
         // Add your cart logic here
-        const productId = "68ae22d2f6b53975d3a4f03a";
+        const productId = _id || id;
+        
+        if (!productId) {
+            console.error("No product ID available");
+            alert("Unable to add this product to cart");
+            return;
+        }
+
+        console.log("Adding product with ID:", productId);
 
         fetch(`http://localhost:3000/cart/add/${productId}`, {
             method: "PATCH",

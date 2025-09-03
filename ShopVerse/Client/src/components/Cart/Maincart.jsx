@@ -1,12 +1,12 @@
 import Header from "../Header";
 import Footer from "../Footer/Footer";
 import "./Cart.css";
-import { useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 export default function Maincart() 
 {
   // Removed old exampleForReturn and counter logic
   // Removed old counter state and handleIncrease; now handled per item below
-        const initialCartItems = [
+        const initialCartItems = useMemo(() => [
           {
             id: 1,
             title: "Wireless Headphones",
@@ -31,9 +31,37 @@ export default function Maincart()
             quantity: 1,
             shipping : 5.99
           },
-        ];
+        ], []);
         const [cartItems, setCartItems] = useState(initialCartItems);
-
+        const token = localStorage.getItem("authToken");
+        useEffect(()=>{
+          if (token) {
+                    fetch("http://localhost:3000/cart", {
+                        method: "GET",
+                        headers: {
+                            Authorization: token
+                        }
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                      // Format the API response to match our component's expected structure
+                      const formattedCartItems = Array.isArray(data) ? data.map(item => ({
+                        id:item._id,
+                        price:item.product?.productPrice || 0,
+                        image: item.product?.productImage || 'https://picsum.photos/200',
+                        quantity: item.quantity || 1,
+                        shipping: item.product?.shipping || 5.99
+                      })) : [];
+                      console.log(data);
+                      setCartItems(formattedCartItems.length > 0 ? formattedCartItems : initialCartItems);
+                      console.log("Formatted cart items:", formattedCartItems);
+                    })
+                    .catch((error) => {
+                      console.error("Error fetching cart items:", error);
+                    });
+                }
+            }, [token, initialCartItems]);
+        
         const handleIncrease = (index) => {
           setCartItems((prevItems) =>
             prevItems.map((item, i) =>
@@ -42,7 +70,7 @@ export default function Maincart()
           );
         };
         const getShippingCost = () => {
-          return cartItems.reduce((acc, item) => acc + item.shipping, 0);
+          return cartItems.reduce((acc, item) => acc + (item.shipping || 5.99), 0);
         };
         const handleDecrease = (index) => {
           setCartItems((prevItems) =>
@@ -77,11 +105,11 @@ export default function Maincart()
                   <tr key={item.id}>
                     <td className="product-info">
                       <div className="product-image">
-                        <img src={item.image} alt="Product" />
+                        <img src={item.image} alt={item.title} />
                       </div>
                       <div className="product-details">
                         <h3>{item.title}</h3>
-                        <p className="product-category">Electronics</p>
+                        <p className="product-category">{item.product?.category || "Electronics"}</p>
                       </div>
                     </td>
                     <td className="price-col">${item.price.toFixed(2)}</td>

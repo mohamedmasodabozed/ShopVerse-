@@ -1,6 +1,6 @@
 
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate, data } from 'react-router-dom'
 // Route guard for pages only for guests (not logged in)
 function GuestRoute({ isLoggedIn, children }) {
     return isLoggedIn ? <Navigate to="/profile" replace /> : children;
@@ -27,10 +27,12 @@ import ForgotPassword from './components/Auth/ForgotPassword'
 import Profile  from "./components/Profile/Profile.jsx"
 import SellingProducts from './components/Profile/sellingProducts.jsx';
 import Maincart from './components/Cart/mainCart.jsx';
+import { useState } from 'react';
 // Home component that contains all the main page content
 
 function Home({isLoggedIn}) {
-    
+    const [products, setProducts] = useState([]);
+    const token = localStorage.getItem("authToken");
     // Flash Sales products data
     const flashSalesProducts = [
         {
@@ -170,7 +172,21 @@ function Home({isLoggedIn}) {
             discountPercentage: 14
         }
     ];
-
+    useEffect(()=>{
+                if (token) {
+                    fetch("http://localhost:3000/products", {
+                        method: "GET",
+                        headers: {
+                            Authorization: token
+                        }
+                    })
+                    .then((data) => data.json())
+                    .then((products) => {
+                        setProducts(products);
+                    });
+                }
+            }, [token]);
+    console.log(products);
     return (
         <>
             <Header isLoggedIn={isLoggedIn} />
@@ -187,7 +203,7 @@ function Home({isLoggedIn}) {
             <FlashSales 
                 text="our products" 
                 show={false} 
-                products={ourProducts} 
+                products={products} 
             />
             <Separator />
             <NewArrival />
