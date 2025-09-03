@@ -3,9 +3,12 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 export default function AddToCart({ onAddToCart }) {
     const handleClick = (e) => {
-        e.stopPropagation(); // Prevent card click event
-        if (onAddToCart) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof onAddToCart === 'function') {
             onAddToCart();
+        } else {
+            console.error("onAddToCart is not a function");
         }
     };
 

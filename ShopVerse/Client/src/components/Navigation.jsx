@@ -13,8 +13,6 @@ export default function Navigation({ loggedIn }) {
         }
         return (
             <>
-                <li>Contact</li>
-                <li>About</li>
             </>
         );
     }

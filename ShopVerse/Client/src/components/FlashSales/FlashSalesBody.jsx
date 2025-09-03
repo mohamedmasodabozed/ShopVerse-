@@ -40,21 +40,28 @@ export default function FlashSalesBody(props)
 
     // Use props.products if available, otherwise use default products
     const products = props.products || defaultProducts;
-
+    const productsToDisplay = products.slice(0, 6); 
     return (
         <div className="flash-sales-body">
             <div className="flash-sales-cards">
-                {products.map((product, index) => (
-                    <Card 
-                        key={index}
-                        image={product.image}
-                        title={product.title}
-                        description={product.description}
-                        price={product.price}
-                        rating={product.rating}
-                        discountPercentage={product.discountPercentage}
-                    />
-                ))}
+                {productsToDisplay.map((product, index) => {
+                    // Check if we're dealing with the API format or the default format
+                    const isApiFormat = product._id !== undefined;
+                    
+                    return (
+                        <Card 
+                            key={isApiFormat ? product._id : index}
+                            id={isApiFormat ? product._id : `flash-product-${index}`}
+                            image={isApiFormat ? (product.productImage?.URL || "https://via.placeholder.com/300") : product.image}
+                            title={isApiFormat ? product.productName : product.title}
+                            description={isApiFormat ? product.productDescription : product.description}
+                            price={isApiFormat ? `$${product.productPrice}` : product.price}
+                            rating={isApiFormat ? 4 : product.rating} // Default rating if not provided
+                            discountPercentage={isApiFormat ? product.productDiscount : product.discountPercentage}
+                            _id={isApiFormat ? product._id : null}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

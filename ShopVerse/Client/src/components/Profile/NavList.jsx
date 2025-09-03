@@ -17,11 +17,13 @@ export default function NavList({role, activeLink, setActiveLink}) {
                             <i className="fas fa-shopping-bag"></i> My Orders
                         </Link>
                     </li>
-                    {role ? <li>
-                        <Link to="/selling-products" className={activeLink === 'selling-products' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'selling-products')}>
-                            <i className="fas fa-shopping-bag"></i> Selling Products
-                        </Link>
-                    </li> : null}
+                    {role === 'seller' && (
+                        <li>
+                            <Link to="/selling-products" className={activeLink === 'selling-products' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'selling-products')}>
+                                <i className="fas fa-shopping-bag"></i> Selling Products
+                            </Link>
+                        </li>
+                    )}
                     <li>
                         <a href="#" className={activeLink === 'wishlist' ? 'active' : 'not-active'} onClick={() => setActiveLink(() => 'wishlist')}>
                             <i className="fas fa-heart"></i> My Wishlist
