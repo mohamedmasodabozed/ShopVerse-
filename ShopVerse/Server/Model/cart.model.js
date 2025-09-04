@@ -16,7 +16,8 @@ const cartSchema = mongoose.Schema({
         },
         quantity: {
             type: Number
-        }
+        },
+        _id:false
     }]
 })
 
