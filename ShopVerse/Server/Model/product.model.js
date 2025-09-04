@@ -46,6 +46,12 @@ const productSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"userCollection",
         required:true
+    },
+
+    flashSales:{
+        type:Number,
+        min:0,
+        max:100
     }
 
 
@@ -53,8 +59,11 @@ const productSchema = mongoose.Schema({
 
 
 productSchema.virtual('finalPrice').get( function (){
-    if(!this.productDiscount && !this.productDiscount > 0) return this.productPrice
-    return this.productPrice - (this.productPrice * this.productDiscount/100)
+    let appliedDiscount = 0
+    if(this.flashSales > 0) appliedDiscount = this.flashSales
+    else if(this.productDiscount && this.productDiscount > 0) appliedDiscount = this.productDiscount
+
+    return this.productPrice - (this.productPrice * appliedDiscount/100)
 })
 
 productSchema.set('toJSON',{virtuals:true})
