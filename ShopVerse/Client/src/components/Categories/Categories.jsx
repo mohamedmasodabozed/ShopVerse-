@@ -45,7 +45,7 @@ export default function Categories() {
         <div className="flash-sales">
             <Tag text="Categories" />
             <CategoryHeader />
-            <ul className="categories-list">
+            <ul className="categories-list sm:flex-wrap sm:justify-center lg:justify-start flex items-center justify-start gap-2 ">
                 {trialInfo.map((icon, index) => (
                     <CategoriesCard key={index} icon={icon.imgsrc} title={icon.title} />
                 ))}
