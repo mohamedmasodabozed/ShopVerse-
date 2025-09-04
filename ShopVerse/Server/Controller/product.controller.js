@@ -58,19 +58,24 @@ export async function getProductById(req, res) {
 
 export async function getProducts(req, res) {
     try {
-        console.log("asfasf")
         let category = req.query.category
-        // let cleanInput = category.replace( " ","\u00A0");
-        // console.log(`${encodeURIComponent(cleanInput)}`)
-        // cleanInput = cleanInput.replace("\u00A0"," ")
-        // console.log(`${encodeURIComponent(cleanInput)}`)
+        let filter = req.query.filter
         let products
-        if (!category) {
+        if (!category && !filter) {
             products = await productCollection.find()
             console.log(products)
         }
-        else {
+        else if(category){
             products = await productCollection.find({ productCategory: category })
+        }
+        else if(filter == "flashSales"){
+            products = await productCollection.find({flashSales: {$gt : 0}})
+        }
+        else if(filter == "bestSellingProducts"){
+            products = await productCollection.find().sort({amountSold:-1}).limit(2)
+        }
+        else if(filter == "newArrivals"){
+            products = await productCollection.find().sort({createdAt:-1}).limit(4)
         }
 
         return res.json({ Message: "Success", products: products })
@@ -98,7 +103,7 @@ export async function updateSellerProduct(req, res) {
             ...body
         }
         let updatedSellerProduct = await productCollection.findOneAndUpdate({ _id: productId, seller: sellerId }, updatedData, { new: true })
-
+        console.log(updatedSellerProduct)
         if (!updatedSellerProduct) return res.status(401).json({ Message: "You do not own this product - Unauthorized" })
         return res.json({ Message: "Success", updatedProduct: updatedSellerProduct })
     } catch (error) {
@@ -123,7 +128,7 @@ export async function applyFlashSale(req,res){
 }
 
 
-export async function getFlashSales(req,res){
-    let products = await productCollection.find({flashSales: {$gt : 0}})
-    return res.json({Message:"Success",products:products})
-}
+// export async function getFlashSales(req,res){
+//     let products = await productCollection.find({flashSales: {$gt : 0}})
+//     return res.json({Message:"Success",products:products})
+// }
