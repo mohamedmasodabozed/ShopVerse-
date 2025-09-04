@@ -3,12 +3,29 @@ import Footer from "../Footer/Footer";
 import "./Cart.css";
 import "./CartExtras.css";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import Popup from "../Popup";
+
 export default function Maincart() 
 {
         const [cartItems, setCartItems] = useState([]);
         const [isLoading, setIsLoading] = useState(true);
         const [isUpdating, setIsUpdating] = useState(false);
         const token = localStorage.getItem("authToken");
+        const [showPopup, setShowPopup] = useState(false);
+        const [popupMessage, setPopupMessage] = useState("");
+        
+        // Auto-close popup after 3 seconds
+        useEffect(() => {
+          if (showPopup) {
+            const timer = setTimeout(() => {
+              setShowPopup(false);
+            }, 1000);
+            
+            return () => clearTimeout(timer);
+          }
+        }, [showPopup]);
         
         useEffect(() => {
           if (token) {
@@ -119,10 +136,48 @@ export default function Maincart()
             setIsUpdating(false);
           });
         };
+        const handleRemove = (productId) => {
+          console.log("Removing product with ID:", productId); 
+          if (!token) {
+            setPopupMessage("Please log in to remove items from your cart");
+            setShowPopup(true);
+            return;
+          }
+          
+          fetch(`http://localhost:3000/cart/remove/${productId}`, {
+            method: "PATCH",
+            headers: {
+              Authorization: token
+            }
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Failed to remove item from cart");
+            }
+            setPopupMessage("Item removed from cart successfully");
+            setShowPopup(true);
+            
+            // Reload page after a reasonable delay (3 seconds)
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+            
+            return response.json();
+          })
+          .then(data => {
+            console.log("Cart update response:", data);
+          })
+          .catch(error => {
+            console.error("Error updating cart:", error);
+            setPopupMessage("Failed to update cart. Please try again.");
+            setShowPopup(true);
+          });
+        }
   // Removed leftover old counter decrement logic
   return (
     <div>
       <Header isLoggedIn={true} />
+      {showPopup && <Popup message={popupMessage} />}
       <div className="cart-page-container">
         <h1 className="cart-title">Shopping Cart</h1>
         
@@ -141,6 +196,7 @@ export default function Maincart()
                     <th className="price-col">Price</th>
                     <th className="quantity-col">Quantity</th>
                     <th className="total-col">Total</th>
+                    <th className="remove-col">Remove</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -188,9 +244,19 @@ export default function Maincart()
                           )}
                         </td>
                         <td className="total-col">
-                          ${((item.product?.productPrice || 0) * (item.quantity || 1)).toFixed(2)}
+                          ${((item.product?.finalPrice || 0) * (item.quantity || 1)).toFixed(2)}
                         </td>
-                      </tr>
+                        <td className="remove-col border-none bg-none text-red-800  hover:text-red-900 hover:text-2xl transition hover:delay-200 ">
+                          <button onClick={() => {
+                            // Log the product object to see its structure
+                            console.log("Product object:", item.product);
+                            // Use _id which is the MongoDB standard ID field
+                            handleRemove(item.product?._id);
+                          }}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr> 
                     ))
                   ) : (
                     <tr>

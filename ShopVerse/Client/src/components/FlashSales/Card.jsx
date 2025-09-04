@@ -1,9 +1,39 @@
 import AddToCart from './AddToCart';
 import DiscountTag from './DiscountTag';
+import { useState, useEffect } from 'react';
+import CardPopup from './CardPopup';
 
 export default function Card(props) {
-    // Use only necessary props instead of logging the entire props object
-    const { image, title, description, price, rating, discountPercentage, _id, id } = props;
+    // Normalize the product data structure
+    const product = props.product || props;
+    
+    // Get properties based on either structure
+    const image = product.image || (product.productImage?.URL || "https://via.placeholder.com/150");
+    const title = product.title || product.productName || "Product";
+    const description = product.description || product.productDescription || "";
+    const price = product.price || `$${(product.finalPrice || product.productPrice || 0).toFixed(2)}`;
+    const rating = product.rating || 4; // Default rating
+    const discountPercentage = product.discountPercentage || product.productDiscount || 0;
+    const productId = product._id || product.id || "";
+    
+    // Debug product data
+    console.log("Normalized product data:", { 
+        image, title, description, price, rating, discountPercentage, productId 
+    });
+    
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
+    
+    // Auto-close popup after 3 seconds
+    useEffect(() => {
+        if (showPopup) {
+            const timer = setTimeout(() => {
+                setShowPopup(false);
+            }, 3000);
+            
+            return () => clearTimeout(timer);
+        }
+    }, [showPopup]);
     
     let stars = "⭐".repeat(rating || 0).split('');
     
@@ -14,16 +44,15 @@ export default function Card(props) {
         const token = localStorage.getItem("authToken");
         
         if (!token) {
-            alert("Please log in to add items to your cart");
+            setPopupMessage("Please log in to add items to your cart");
+            setShowPopup(true);
             return;
         }
         
-        // Add your cart logic here
-        const productId = _id || id;
-        
         if (!productId) {
             console.error("No product ID available");
-            alert("Unable to add this product to cart");
+            setPopupMessage("Unable to add this product to cart");
+            setShowPopup(true);
             return;
         }
 
@@ -41,7 +70,8 @@ export default function Card(props) {
         })
         .then(response => {
             if (response.ok) {
-                alert(`${title} added to your cart!`);
+                setPopupMessage(`${title} added to your cart!`);
+                setShowPopup(true);
                 return response.json();
             } else {
                 throw new Error('Failed to add to cart');
@@ -52,15 +82,28 @@ export default function Card(props) {
         })
         .catch(error => {
             console.error("Error adding to cart:", error);
-            alert("Could not add to cart. Please try again.");
+            setPopupMessage("Could not add to cart. Please try again.");
+            setShowPopup(true);
         });
     };
 
     return (
-        <div className="flash-sales-card">
+        <div className="flash-sales-card px-6 py-4 shadow-4xl bg-gray-100 rounded-lg transition delay-300" style={{ position: 'relative' }}>
+            {showPopup && (
+                <div style={{ 
+                    position: 'absolute',
+                    top: '10px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 1000,
+                    width: '90%'
+                }}>
+                    <CardPopup message={popupMessage} />
+                </div>
+            )}
             <div className="card-image-container">
-                <img src={image} alt="Product" />
-                <DiscountTag discountPercentage={discountPercentage} />
+                <img className="w-11/12 h-48 object-cover rounded-lg" src={image} alt={title} />
+                {discountPercentage > 0 && <DiscountTag discountPercentage={discountPercentage} />}
                 <AddToCart onAddToCart={handleAddToCart} />
             </div>
             <div className="card-content">
@@ -70,10 +113,11 @@ export default function Card(props) {
                 <div className="rating">
                     <ul>
                         {stars.map((star, index) => (
-                            <li key={index}>{star}</li>
+                            <li key={index} className='relative -right-10'>{star}</li>
                         ))}
                     </ul>
                 </div>
+                <button className='bg-red-500 text-white py-2 px-4 rounded '>Show Details</button>
             </div>
         </div>
     );

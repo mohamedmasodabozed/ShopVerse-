@@ -27,12 +27,16 @@ import ForgotPassword from './components/Auth/ForgotPassword'
 import Profile  from "./components/Profile/Profile.jsx"
 import SellingProducts from './components/Profile/sellingProducts.jsx';
 import Maincart from './components/Cart/mainCart.jsx';
+import TailwindDemo from './components/TailwindDemo.jsx';
+import BrowsePage from './components/browseCategory/Browsepage.jsx';
 import { useState } from 'react';
+import Popup from './components/Popup.jsx';
 // Home component that contains all the main page content
 
 function Home({isLoggedIn}) {
     const [products, setProducts] = useState([]);
     const token = localStorage.getItem("authToken");
+    const [showPopup, setShowPopup] = useState(false);
     // Flash Sales products data
     const flashSalesProducts = [
         {
@@ -254,6 +258,7 @@ function App() {
                                     </PrivateRoute>
                                 } />
                                 <Route path="/cart" element={<Maincart />} />
+                                <Route path="/browse/:category" element={<BrowsePage />} />
                         </Routes>
                 </Router>
         )
