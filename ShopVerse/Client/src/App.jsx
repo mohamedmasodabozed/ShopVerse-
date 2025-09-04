@@ -194,7 +194,7 @@ function Home({isLoggedIn}) {
 
 
             useEffect(()=>{
-                fetch("http://localhost:3000/products/getFlashSales"  
+                fetch("http://localhost:3000/products/getProducts?filter=flashSales"  
                 ).then(res => res.json()).then(data => {
                     console.log("flash sales data:", data);
                     setFlashProducts(data.products);
