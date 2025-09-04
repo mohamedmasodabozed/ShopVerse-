@@ -52,6 +52,11 @@ const productSchema = mongoose.Schema({
         type:Number,
         min:0,
         max:100
+    },
+
+    amountSold:{
+        type:Number,
+        default:0
     }
 
 
