@@ -3,39 +3,37 @@ import { useParams } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer/Footer';
 import Card from '../FlashSales/Card';
-export default function BrowsePage() {
+export default function BrowsePage({propCategory}) {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("authToken");
-  
+  const [showNormal,setShowNormal] = useState(true); 
   // Format the category for display (convert dashes back to spaces, capitalize words)
   const displayCategory = category
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
-  
-  const normalizeCategory = (str) => {
-    if (!str) return "";
-    return str.replace(/\u00A0/g, ' ').trim();
-  };
-  
-  console.log(`encoded category: "${encodeURIComponent(displayCategory)}"`);
-  console.log(`Raw category from URL: "${category}"`);
-  console.log(`Raw displayCategory: "${displayCategory}"`);
+    useEffect(()=>{if(displayCategory.includes("   ")){
+      setShowNormal(false);
+    }},[showNormal])
+    const SessionCategory = sessionStorage.getItem('category');
+    console.log(showNormal)
+    const SessionCategory1 = SessionCategory.replace("’","'")
+    console.log(encodeURIComponent(SessionCategory1));
   useEffect(() => {
     // Fetch products by category
     setLoading(true);
-    fetch(`http://localhost:3000/products/getProducts?category=${displayCategory}`)
+    fetch(`http://localhost:3000/products/getProducts?category=${encodeURIComponent(SessionCategory1)}`)
       .then(res => {
         if (!res.ok) {
+
           throw new Error('Failed to fetch products');
         }
-        console.log(encodeURIComponent(displayCategory));
+        console.log(res);
         return res.json();
       })
       .then(data => {
-        console.log("Products data:", data);
         setProducts(data.products || []);
         setLoading(false);
       })
@@ -44,7 +42,6 @@ export default function BrowsePage() {
         setLoading(false);
       });
   }, [category, displayCategory]);
-console.log(products)
   return (
     <div className="bg-gray-50">
       <Header isLoggedIn={!!token} />

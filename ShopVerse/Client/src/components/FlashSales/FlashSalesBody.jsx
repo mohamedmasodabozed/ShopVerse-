@@ -55,9 +55,9 @@ export default function FlashSalesBody(props)
                             image={isApiFormat ? (product.productImage?.URL || "https://via.placeholder.com/300") : product.image}
                             title={isApiFormat ? product.productName : product.title}
                             description={isApiFormat ? product.productDescription : product.description}
-                            price={isApiFormat ? `$${product.productPrice}` : product.price}
+                            price={isApiFormat ? `$${product.finalPrice.toFixed(2)}` : product.price}
                             rating={isApiFormat ? 4 : product.rating} // Default rating if not provided
-                            discountPercentage={isApiFormat ? product.productDiscount : product.discountPercentage}
+                            discountPercentage={isApiFormat ? product.flashSales : product.discountPercentage}
                             _id={isApiFormat ? product._id : null}
                         />
                     );

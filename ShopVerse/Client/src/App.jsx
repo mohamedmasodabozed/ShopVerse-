@@ -35,6 +35,7 @@ import Popup from './components/Popup.jsx';
 
 function Home({isLoggedIn}) {
     const [products, setProducts] = useState([]);
+    const [flashProducts, setFlashProducts] = useState([]);
     const token = localStorage.getItem("authToken");
     const [showPopup, setShowPopup] = useState(false);
     // Flash Sales products data
@@ -190,7 +191,16 @@ function Home({isLoggedIn}) {
                     });
                 }
             }, [token]);
-    console.log(products);
+
+
+            useEffect(()=>{
+                fetch("http://localhost:3000/products/getFlashSales"  
+                ).then(res => res.json()).then(data => {
+                    console.log("flash sales data:", data);
+                    setFlashProducts(data.products);
+                });
+            }, [token])
+    console.log("flash products:", flashProducts);
     return (
         <>
             <Header isLoggedIn={isLoggedIn} />
@@ -198,7 +208,7 @@ function Home({isLoggedIn}) {
             <FlashSales 
                 text="Today's" 
                 show={true} 
-                products={flashSalesProducts} 
+                products={flashProducts} 
             />
             <Separator />
             <Categories />
