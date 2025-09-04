@@ -413,7 +413,10 @@ nav {
     font-weight: 700;
     font-style: Bold;
     font-size: 24px;
-    line-heig.advertise-area ul li 
+    line-height: 1.2;
+}
+
+.advertise-area ul li 
 {
     background: #DB4444;
     width: 12px;
@@ -438,7 +441,10 @@ nav {
 .advertise-area ul li:hover {
     opacity: 80%;
     transform: scale(1.1);
-} letter-spacing: 3%;
+}
+
+.logo {
+    letter-spacing: 3%;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
@@ -3270,4 +3276,50 @@ footer {
     position: relative;
     left: -10px;
     padding: 10px 20px;
+}
+
+/* Popup styling */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.popup-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+.popup-content button {
+    background-color: #DB4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.popup-content button:hover {
+    background-color: #c13838;
 }

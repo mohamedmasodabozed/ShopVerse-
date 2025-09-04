@@ -1,0 +1,17 @@
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles below this line */
+:root {
+  --primary-color: #DB4444;
+  --secondary-color: #F5F5F5;
+  --text-color: #333333;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
