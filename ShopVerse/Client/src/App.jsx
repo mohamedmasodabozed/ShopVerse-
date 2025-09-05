@@ -29,6 +29,7 @@ import SellingProducts from './components/Profile/sellingProducts.jsx';
 import Maincart from './components/Cart/mainCart.jsx';
 import TailwindDemo from './components/TailwindDemo.jsx';
 import BrowsePage from './components/browseCategory/Browsepage.jsx';
+import ShowDetails from './components/showDetails/showDetails.jsx';
 import { useState } from 'react';
 import Popup from './components/Popup.jsx';
 // Home component that contains all the main page content
@@ -38,6 +39,8 @@ function Home({isLoggedIn}) {
     const [flashProducts, setFlashProducts] = useState([]);
     const token = localStorage.getItem("authToken");
     const [showPopup, setShowPopup] = useState(false);
+    const [bestSellersProducts, setBestSellersProducts] = useState([]);
+    const [newArrivalsProducts, setNewArrivalsProducts] = useState([]);
     // Flash Sales products data
     const flashSalesProducts = [
         {
@@ -75,7 +78,7 @@ function Home({isLoggedIn}) {
     ];
 
     // Best Sellers products data
-    const bestSellersProducts = [
+    const bestSellersProducts1 = [
         {
             image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop",
             title: "Wireless Headphones",
@@ -192,7 +195,7 @@ function Home({isLoggedIn}) {
                 }
             }, [token]);
 
-
+            console.log("new arrivals products:", newArrivalsProducts);
             useEffect(()=>{
                 fetch("http://localhost:3000/products/getProducts?filter=flashSales"  
                 ).then(res => res.json()).then(data => {
@@ -200,7 +203,30 @@ function Home({isLoggedIn}) {
                     setFlashProducts(data.products);
                 });
             }, [token])
-    console.log("flash products:", flashProducts);
+            useEffect(()=>{
+                fetch("http://localhost:3000/products/getProducts?filter=bestSellingProducts").then(res => res.json()).then(data => {
+                    console.log("best sellers data:", data);
+                    setBestSellersProducts(data.products);
+                });
+            }, [token])
+            
+            useEffect(()=>{
+                fetch("http://localhost:3000/products/getProducts?filter=newArrivals").then((res)=>{
+                    console.log("fetching new arrivals, response:", res);
+                    return res.json();
+                }
+                ).then(data => {
+                    console.log("New arrivals API response:", data);
+                    // Check for different possible response formats
+                    const products = data.products || data.Data || data;
+                    setNewArrivalsProducts(products);
+                })
+                .catch(error => {
+                    console.error("Error fetching new arrivals:", error);
+                    // Set to empty array on error
+                    setNewArrivalsProducts([]);
+                });
+            }, [token])
     return (
         <>
             <Header isLoggedIn={isLoggedIn} />
@@ -220,7 +246,7 @@ function Home({isLoggedIn}) {
                 products={products} 
             />
             <Separator />
-            <NewArrival />
+            <NewArrival products={newArrivalsProducts} />
             <Footer />
         </>
     )
@@ -269,6 +295,7 @@ function App() {
                                 } />
                                 <Route path="/cart" element={<Maincart />} />
                                 <Route path="/browse/:category" element={<BrowsePage />} />
+                                <Route path="/product/:productId" element={<ShowDetails />} />
                         </Routes>
                 </Router>
         )
