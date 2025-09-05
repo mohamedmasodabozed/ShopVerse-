@@ -2,9 +2,9 @@ import Tag from "../FlashSales/Tag.jsx";
 import FlashSalesHeaderText from "../FlashSales/FlashSalesHeaderText.jsx";
 import ArrivalCard from "./ArrivalCard.jsx";
 
-export default function NewArrival() {
-    // New Arrival products data
-    const arrivalProducts = [
+export default function NewArrival({ products }) {
+    // Default New Arrival products data if none are passed
+    const defaultArrivalProducts = [
         {
             img: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop",
             title: "PlayStation 5",
@@ -31,11 +31,14 @@ export default function NewArrival() {
         }
     ];
 
+    // Use passed products or fall back to default products
+    const productsToDisplay = products || defaultArrivalProducts;
+
     return (
         <div className="new-arrival">
             <Tag text="Featured" />
             <FlashSalesHeaderText title="New Arrival" />
-            <ArrivalCard products={arrivalProducts} />
+            <ArrivalCard products={productsToDisplay} />
         </div>
     );
 }

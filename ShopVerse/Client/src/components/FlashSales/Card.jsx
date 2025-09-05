@@ -2,6 +2,7 @@ import AddToCart from './AddToCart';
 import DiscountTag from './DiscountTag';
 import { useState, useEffect } from 'react';
 import CardPopup from './CardPopup';
+import { Link } from 'react-router-dom';
 
 export default function Card(props) {
     // Normalize the product data structure
@@ -117,7 +118,12 @@ export default function Card(props) {
                         ))}
                     </ul>
                 </div>
-                <button className='bg-red-500 text-white py-2 px-4 rounded '>Show Details</button>
+                <Link 
+                    to={`/product/${productId}`} 
+                    className='bg-red-500 text-white text-center py-2 px-4 rounded  hover:bg-red-600 transition-colors'
+                >
+                    Show Details
+                </Link>
             </div>
         </div>
     );
