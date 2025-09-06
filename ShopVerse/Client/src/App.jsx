@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, data } from 'react-router-dom'
+import ScrollToTop from './components/utils/ScrollToTop'
 // Route guard for pages only for guests (not logged in)
 function GuestRoute({ isLoggedIn, children }) {
     return isLoggedIn ? <Navigate to="/profile" replace /> : children;
@@ -30,8 +31,10 @@ import Maincart from './components/Cart/mainCart.jsx';
 import TailwindDemo from './components/TailwindDemo.jsx';
 import BrowsePage from './components/browseCategory/Browsepage.jsx';
 import ShowDetails from './components/showDetails/showDetails.jsx';
+import ShowmorePage from './components/Showmore/ShowmorePage.jsx';
 import { useState } from 'react';
 import Popup from './components/Popup.jsx';
+import Checkout from './components/checkout/Checkout.jsx';
 // Home component that contains all the main page content
 
 function Home({isLoggedIn}) {
@@ -269,6 +272,7 @@ function App() {
 
         return (
                 <Router>
+                        <ScrollToTop />
                         <Routes>
                                 <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
                                 <Route path="/signup" element={
@@ -296,6 +300,12 @@ function App() {
                                 <Route path="/cart" element={<Maincart />} />
                                 <Route path="/browse/:category" element={<BrowsePage />} />
                                 <Route path="/product/:productId" element={<ShowDetails />} />
+                                <Route path="/showmore" element={<ShowmorePage />} />
+                                <Route path="/checkout" element={
+                                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                                        <Checkout />
+                                    </PrivateRoute>
+                                } />
                         </Routes>
                 </Router>
         )

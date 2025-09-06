@@ -340,7 +340,7 @@ export default function ShowDetails() {
                                     <li key={index}>{feature}</li>
                                 ))}
                             </ul>}
-                            
+            
                         </div>
                     </div>
                 </div>
