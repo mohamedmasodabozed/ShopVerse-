@@ -307,11 +307,25 @@
   border-radius: 4px;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .checkout-button:hover {
   background-color: #c13838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(219, 68, 68, 0.2);
+}
+
+.checkout-button:active {
+  transform: translateY(0);
+}
+
+.checkout-button svg {
+  margin-right: 8px;
+  font-size: 1.2rem;
 }
 
 /* Responsive adjustments */

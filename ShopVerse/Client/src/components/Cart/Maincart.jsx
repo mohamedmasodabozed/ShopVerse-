@@ -5,7 +5,9 @@ import "./CartExtras.css";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import Popup from "../Popup";
+import { MdShoppingCart, MdSecurity } from "react-icons/md";
 
 export default function Maincart() 
 {
@@ -15,8 +17,8 @@ export default function Maincart()
         const token = localStorage.getItem("authToken");
         const [showPopup, setShowPopup] = useState(false);
         const [popupMessage, setPopupMessage] = useState("");
+        const navigate = useNavigate();
         
-        // Auto-close popup after 3 seconds
         useEffect(() => {
           if (showPopup) {
             const timer = setTimeout(() => {
@@ -305,8 +307,10 @@ export default function Maincart()
                   <span>Total</span>
                   <span className="amount">${(subtotalAmount + getShippingCost()).toFixed(2)}</span>
                 </div>
-                
-                <button className="checkout-button">Proceed to Checkout</button>
+
+                <button className="checkout-button" onClick={() => navigate("/checkout")}>
+                  <MdSecurity className="mr-2" /> Proceed to Checkout
+                </button>
               </div>
             </div>
           </div>

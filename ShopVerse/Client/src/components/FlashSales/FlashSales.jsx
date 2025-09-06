@@ -31,7 +31,7 @@ export default function FlashSales(props) {
                 show={show}
             />
             <FlashSalesBody products={props.products} />
-            <ShowMoreButton text="Show More" />
+            <ShowMoreButton text="Show More" from={headerTitle} />
         </div>
     );
 } 

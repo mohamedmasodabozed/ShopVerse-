@@ -1,5 +1,7 @@
+import { Link, useNavigate } from "react-router-dom";
 export default function ArrivalCard({products}) {
     console.log("ArrivalCard products:", products);
+    const navigate = useNavigate();
     
     // Helper function to get image source from different product formats
     const getImage = (product) => {
@@ -20,6 +22,14 @@ export default function ArrivalCard({products}) {
     const getLink = (product) => {
         return product?.link || "Shop Now";
     };
+    
+    // Navigate to product details and ensure scroll to top
+    const navigateToProduct = (productId) => {
+        if (productId) {
+            navigate(`/product/${productId}`);
+            window.scrollTo(0, 0);
+        }
+    }
     return (
         <div className="arrival-card">
             <div className="arrival-grid">
@@ -28,7 +38,12 @@ export default function ArrivalCard({products}) {
                     <div className="item-content">
                         <h3>{getTitle(products[0], "PlayStation 5")}</h3>
                         <p>{getDescription(products[0], "Gaming console")}</p> 
-                        <a href="#" className="shop-link">{getLink(products[0])}</a>
+                        <button 
+                            onClick={() => navigateToProduct(products[0]?.id)} 
+                            className="shop-link"
+                        >
+                            Show Details
+                        </button>
                     </div>
                 </div>
                 
@@ -37,7 +52,12 @@ export default function ArrivalCard({products}) {
                     <div className="item-content">
                         <h3>{getTitle(products[1], "Women's Collections")}</h3>
                         <p>{getDescription(products[1], "Fashion items")}</p> 
-                        <a href="#" className="shop-link">{getLink(products[1])}</a>
+                        <button 
+                            onClick={() => navigateToProduct(products[1]?.id)} 
+                            className="shop-link"
+                        >
+                            Show Details
+                        </button>
                     </div>
                 </div>
                 
@@ -46,7 +66,12 @@ export default function ArrivalCard({products}) {
                     <div className="item-content">
                         <h3>{getTitle(products[2], "Speakers")}</h3>
                         <p>{getDescription(products[2], "Audio equipment")}</p> 
-                        <a href="#" className="shop-link">{getLink(products[2])}</a>
+                        <button 
+                            onClick={() => navigateToProduct(products[2]?.id)} 
+                            className="shop-link"
+                        >
+                            {getLink(products[2])}
+                        </button>
                     </div>
                 </div>
                 
@@ -55,7 +80,12 @@ export default function ArrivalCard({products}) {
                     <div className="item-content">
                         <h3>{getTitle(products[3], "Perfume")}</h3>
                         <p>{getDescription(products[3], "Luxury fragrance")}</p> 
-                        <a href="#" className="shop-link">{getLink(products[3])}</a>
+                        <button 
+                            onClick={() => navigateToProduct(products[3]?.id)} 
+                            className="shop-link"
+                        >
+                            {getLink(products[3])}
+                        </button>
                     </div>
                 </div>
             </div>

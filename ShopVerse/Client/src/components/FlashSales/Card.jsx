@@ -2,9 +2,11 @@ import AddToCart from './AddToCart';
 import DiscountTag from './DiscountTag';
 import { useState, useEffect } from 'react';
 import CardPopup from './CardPopup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Card(props) {
+    // For navigation with scroll to top
+    const navigate = useNavigate();
     // Normalize the product data structure
     const product = props.product || props;
     
@@ -118,12 +120,15 @@ export default function Card(props) {
                         ))}
                     </ul>
                 </div>
-                <Link 
-                    to={`/product/${productId}`} 
-                    className='bg-red-500 text-white text-center py-2 px-4 rounded  hover:bg-red-600 transition-colors'
+                <button 
+                    onClick={() => {
+                        navigate(`/product/${productId}`);
+                        window.scrollTo(0, 0);
+                    }} 
+                    className='bg-red-500 text-white text-center py-2 px-4 rounded hover:bg-red-600 transition-colors'
                 >
                     Show Details
-                </Link>
+                </button>
             </div>
         </div>
     );
