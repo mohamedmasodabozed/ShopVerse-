@@ -1,21 +1,20 @@
 /* Popup Product Form Styling */
 .product-form {
   position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-    padding: 2.5rem 2rem 2rem 2rem;
-    z-index: 1001;
-    min-width: 430px;
-    max-width: 95vw;
-    display: flex
-;
-    flex-direction: column;
-    gap: 1.1rem;
-    border: 1.5px solid #eee;
+  top: 120%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  padding: 2.5rem 2rem 2rem 2rem;
+  z-index: 1001;
+  min-width: 430px;
+  max-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  border: 1.5px solid #eee;
 }
 .product-form input[type="text"],
 .product-form input[type="number"] {
@@ -28,10 +27,10 @@
 }
 .product-form input[type="text"]:focus,
 .product-form input[type="number"]:focus {
-  border: 1.5px solid #DB4444;
+  border: 1.5px solid #db4444;
 }
 .product-form button[type="submit"] {
-  background: #DB4444;
+  background: #db4444;
   color: #fff;
   border: none;
   border-radius: 7px;
@@ -55,12 +54,12 @@
   background: #fff;
 }
 .product-form select:focus {
-  border: 1.5px solid #DB4444;
-  box-shadow: 0 0 0 2px rgba(219,68,68,0.15);
+  border: 1.5px solid #db4444;
+  box-shadow: 0 0 0 2px rgba(219, 68, 68, 0.15);
   outline: none;
 }
 .dropzone {
-  border: 2px dashed #DB4444;
+  border: 2px dashed #db4444;
   border-radius: 8px;
   padding: 20px;
   text-align: center;
@@ -78,7 +77,7 @@
   margin: 0 auto;
   display: block;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
 .seller-products-container {
   display: flex;
@@ -86,7 +85,7 @@
   margin: 2rem auto;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
   padding: 2rem;
   gap: 2rem;
 }
@@ -98,22 +97,20 @@
 }
 
 .addCard {
-      display: flex
-;
-    align-items: center;
-    justify-content: flex-start;
-    background: #DB4444;
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    padding: 5rem 20.5rem;
-    margin-bottom: 2rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    gap: 1rem;
-    width: fit-content;
-        margin-bottom: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #db4444;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  padding: 5rem 20.5rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: fit-content;
+  margin-bottom: 70px;
 }
 .addCard:hover {
   background: #b32b2b;
@@ -131,8 +128,7 @@
   color: #222;
   margin-bottom: 1.5rem;
 }
-.flash-sales-card 
-{
+.flash-sales-card {
   box-shadow: inset -1px -1px 0px 0px #eae7e7;
 }
 

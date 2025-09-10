@@ -1,0 +1,38 @@
+.about-page .section-tag {
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.about-page .hero-section {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.about-page .value-card,
+.about-page .advantage-card,
+.about-page .team-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-page .value-card:hover,
+.about-page .advantage-card:hover,
+.about-page .team-card:hover {
+  transform: translateY(-5px);
+}
+
+.about-page .team-card img {
+  transition: transform 0.5s ease;
+}
+
+.about-page .team-card:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .about-page .hero-section {
+    padding: 3rem 0;
+  }
+  
+  .about-page .about-image {
+    height: 300px;
+  }
+}
