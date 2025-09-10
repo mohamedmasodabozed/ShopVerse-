@@ -1,0 +1,58 @@
+.contact-page .hero-section {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-page .icon-circle {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-page .social-icon {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.contact-page .social-icon:hover {
+  transform: translateY(-3px);
+}
+
+.contact-page .faq-item {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-page .faq-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.contact-page form input:focus,
+.contact-page form textarea:focus {
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+}
+
+.contact-page .success-message {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-page .hero-section {
+    padding: 3rem 0;
+  }
+  
+  .contact-page .map-section {
+    height: 300px;
+  }
+}

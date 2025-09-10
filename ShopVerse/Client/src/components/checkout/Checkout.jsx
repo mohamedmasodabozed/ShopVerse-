@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer/Footer';
@@ -10,8 +10,11 @@ import { BsFillCreditCardFill, BsPaypal, BsBank, BsCashCoin, BsTags } from 'reac
 import { HiOutlineTicket } from 'react-icons/hi';
 import { BiChevronRight } from 'react-icons/bi';
 import { RiSecurePaymentLine } from 'react-icons/ri';
+import { jwtDecode } from 'jwt-decode';
 
 export default function Checkout() {
+    const token = localStorage.getItem("authToken");
+    const decryptedToken = token ? jwtDecode(token) : {};
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -22,6 +25,9 @@ export default function Checkout() {
         zipCode: '',
         country: 'United States',
         paymentMethod: 'credit-card',
+        cardNumber: '', 
+        expiryDate: '', 
+        cvv : '',
         couponCode: ''
     });
     
@@ -41,7 +47,18 @@ export default function Checkout() {
         alert('Order placed successfully!');
         navigate('/');
     };
+    console.log(formData);
+    useEffect(()=>{
+        if(decryptedToken)
+        {
+            fetch(`http://localhost:3000/users/${decryptedToken.id}`,{
+                method : 'post' ,
+                headers : { Authorization : token} , 
+                body : JSON.stringify(formData)
+            }).then((res)=>res.json()).then((data)=> console.log(data))
+        }
 
+    },[decryptedToken])
     return (
         <div className="checkout-page bg-gray-50">
             <Header isLoggedIn={true} />
@@ -67,9 +84,7 @@ export default function Checkout() {
                         </div>
                     </div>
                 </div>
-                
                 <div className="flex flex-col lg:flex-row justify-between gap-8">
-                    {/* Left Section - Shipping Information */}
                     <div className="w-full lg:w-7/12">
                         <div className="bg-white p-6 rounded-lg shadow-md">
                             <div className="section-header flex items-center mb-6">
@@ -253,7 +268,7 @@ export default function Checkout() {
                                     </label>
                                 </div>
                                 
-                                <div className="payment-option p-4 border border-gray-200 rounded-md hover:border-orange-500 transition-all cursor-pointer flex items-center">
+                                {/* <div className="payment-option p-4 border border-gray-200 rounded-md hover:border-orange-500 transition-all cursor-pointer flex items-center">
                                     <input
                                         type="radio"
                                         id="paypal"
@@ -267,9 +282,9 @@ export default function Checkout() {
                                         <BsPaypal className="text-blue-600 text-xl mr-2" />
                                         <span>PayPal</span>
                                     </label>
-                                </div>
+                                </div> */}
                                 
-                                <div className="payment-option p-4 border border-gray-200 rounded-md hover:border-orange-500 transition-all cursor-pointer flex items-center">
+                                {/* <div className="payment-option p-4 border border-gray-200 rounded-md hover:border-orange-500 transition-all cursor-pointer flex items-center">
                                     <input
                                         type="radio"
                                         id="bank-transfer"
@@ -283,7 +298,7 @@ export default function Checkout() {
                                         <BsBank className="text-green-600 text-xl mr-2" />
                                         <span>Bank Transfer</span>
                                     </label>
-                                </div>
+                                </div> */} 
                                 
                                 <div className="payment-option p-4 border border-gray-200 rounded-md hover:border-orange-500 transition-all cursor-pointer flex items-center">
                                     <input
@@ -300,8 +315,47 @@ export default function Checkout() {
                                         <span>Cash on Delivery</span>
                                     </label>
                                 </div>
+                                {formData.paymentMethod === 'credit-card' && (
+                                    <div className="credit-card-info mt-6 space-y-4">
+                                        <div className="form-group">
+                                            <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">Card Number</label>
+                                            <input
+                                                type="text"
+                                                id="cardNumber"
+                                                name="cardNumber"
+                                                value={formData.cardNumber}
+                                                onChange={handleInputChange}
+                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                                placeholder="1234 5678 9012 3456"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700">Expiry Date</label>
+                                            <input
+                                                type="date"
+                                                id="expiryDate"
+                                                name="expiryDate"
+                                                value={formData.expiryDate}
+                                                onChange={handleInputChange}
+                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                                placeholder="MM/YY"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="cvv" className="block text-sm font-medium text-gray-700">CVV</label>
+                                            <input
+                                                type="text"
+                                                id="cvv"
+                                                name="cvv"
+                                                value={formData.cvv}
+                                                onChange={handleInputChange}
+                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                                placeholder="123"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                            
                             <div className="mt-6 flex justify-center">
                                 <div className="security-badge flex items-center text-gray-600 text-sm border border-gray-200 rounded-md px-3 py-2">
                                     <RiSecurePaymentLine className="text-green-600 mr-2 text-xl" />
@@ -320,7 +374,8 @@ export default function Checkout() {
                                 Complete Order
                             </button>
                         </div>
-                    </div>
+                        
+                    </div> 
                     
                     {/* Right Section - Cart Summary */}
                     <div className="w-full lg:w-4/12">

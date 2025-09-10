@@ -5,12 +5,12 @@ import "./sellingProducts.css";
 import mockImage from "../../assets/istockphoto-1409329028-1024x1024.jpg"
 import ProductForm from "./ProductForm";
 import { useEffect, useState, useCallback } from "react";
-
 export default function SellingProducts({ isLoggedIn }) {
     let token = localStorage.getItem("authToken");
     let role = "";
     const [products, setProducts] = useState([]);
     const [shown, setShown] = useState(false);
+    const [variantItems , setVariantItems] = useState([]);
     if (token) {
         try {
             const decoded = JSON.parse(atob(token.split('.')[1]));
@@ -36,9 +36,29 @@ export default function SellingProducts({ isLoggedIn }) {
             });
         }
     }, [token]);
-
+    const submitVariantItems = useCallback(() => {
+        if (token) {
+            fetch("http://localhost:3000/products", {
+                method: "POST",
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ variantItems })
+            })
+            .then((data) => data.json())
+            .then((response) => {
+                console.log("Response from server:", response);
+            })
+            .catch((error) => {
+                console.error("Error posting variant items:", error);
+            });
+        }
+    }, [token, variantItems]);
+    console.log(`products function:${(JSON.stringify(products.reverse()))}`);
     useEffect(() => {
         fetchProducts();
+        submitVariantItems();
     }, [fetchProducts]);
     
     return (
@@ -52,8 +72,9 @@ export default function SellingProducts({ isLoggedIn }) {
                         <span>Add Your Products</span>
                         <span>+</span>
                     </div>
+                    {console.log(`products outside div:${(JSON.stringify(products))}`)}
                     <div className="current-products">
-                        {console.log(`products:${(products)}`)}
+                        {console.log(`products:${(JSON.stringify(products))}`)}
                         {products.map((product) => (
                             console.log(`product this is product pig:${JSON.stringify(product)}`),
                             <Card
@@ -67,7 +88,7 @@ export default function SellingProducts({ isLoggedIn }) {
                                 discountPercentage={product.productDiscount}
                             />
                         ))}
-                        {shown ? <ProductForm isLoggedIn={isLoggedIn} onClose={() => setShown(false)} onProductAdded={fetchProducts} /> : null}
+                        {shown ? <ProductForm isLoggedIn={isLoggedIn} onClose={() => setShown(false)} variantItems={variantItems} setVariantItems={setVariantItems} onProductAdded={fetchProducts} products={products} setProducts={setProducts} /> : null}
                     </div>
                 </div>
             </div>

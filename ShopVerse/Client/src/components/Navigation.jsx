@@ -21,8 +21,8 @@ export default function Navigation({ loggedIn }) {
         <div className="links">
             <ul>
                 <li><Link to="/">Home</Link></li>
-                <li>Contact</li>
-                <li>About</li>
+                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/about">About</Link></li>
                 {renderLinks()}
             </ul>
         </div>

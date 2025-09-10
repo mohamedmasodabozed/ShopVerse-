@@ -2,6 +2,9 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, data } from 'react-router-dom'
 import ScrollToTop from './components/utils/ScrollToTop'
+import About from './components/AboutAndContact/About.jsx';
+import Contact from './components/AboutAndContact/Contact.jsx';
+
 // Route guard for pages only for guests (not logged in)
 function GuestRoute({ isLoggedIn, children }) {
     return isLoggedIn ? <Navigate to="/profile" replace /> : children;
@@ -301,6 +304,8 @@ function App() {
                                 <Route path="/browse/:category" element={<BrowsePage />} />
                                 <Route path="/product/:productId" element={<ShowDetails />} />
                                 <Route path="/showmore" element={<ShowmorePage />} />
+                                <Route path="/about" element={<About />} />
+                                <Route path="/contact" element={<Contact />} />
                                 <Route path="/checkout" element={
                                     <PrivateRoute isLoggedIn={isLoggedIn}>
                                         <Checkout />
