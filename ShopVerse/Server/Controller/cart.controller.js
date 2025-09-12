@@ -19,25 +19,44 @@ export async function addToCart(req, res) {
         let userId = req.user._id
         let productId = req.params.productId
         let quantity = req.body.quantity
+        let size = req.body.size
+        let color = req.body.color
+
+
         let updatedCart
+        // let cartProductExists
+
+
         if (!userId || !quantity) return res.status(400).json({ Message: "Bad Request" })
         if (!mongoose.Types.ObjectId.isValid(productId)) return res.status(400).json({ Message: "Invalid Product ID" })
 
         let productExists = await productCollection.findById(productId)
         if (!productExists) return res.status(404).json({ Message: "Product doesn't exist" })
-            
-        let cartProductExists = await cartCollection.findOne({ user: userId, "products.product": productId })
+        if (size && color) {
+            updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId, "products.size": size, "products.color": color }, { $inc: { "products.$.quantity": quantity } }, { new: true })
 
-        if (cartProductExists) {
-            updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId }, { $inc: { "products.$.quantity": quantity } }, { new: true })
-            console.log(updatedCart)
+            updatedCart = updatedCart ? updatedCart : await cartCollection.findOneAndUpdate({ user: userId }, { $push: { products: { product: productId, quantity: quantity,size:size,color:color } }}, { new: true })
+        }
+        else if(color){
+            updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId, "products.color": color }, { $inc: { "products.$.quantity": quantity } }, { new: true })
+
+            updatedCart = updatedCart ? updatedCart : await cartCollection.findOneAndUpdate({ user: userId }, { $push: { products: { product: productId, quantity: quantity,color:color } }}, { new: true })
+        }
+        else{
+            updatedCart = await cartCollection.findOneAndUpdate({user:userId},{$push:{products:{product:productId, quantity:quantity}}})
         }
 
-        else if (!updatedCart) {
-            updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, {
-                $push: { products: { product: productId, quantity: quantity } }
-            }, { new: true })
-        }
+
+        // if (cartProductExists) {
+        //     updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId }, { $inc: { "products.$.quantity": quantity } }, { new: true })
+        //     console.log(updatedCart)
+        // }
+
+        // else if (!cartProductExists) {
+        //     updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, {
+        //         $push: { products: { product: productId, quantity: quantity } }
+        //     }, { new: true })
+        // }
         return res.json({ Message: "Success", Data: updatedCart })
     } catch (error) {
         return res.status(400).json({ Message: `${error}` })
@@ -79,7 +98,7 @@ export async function getCartLen(req, res) {
 export async function getCartItems(req, res) {
     try {
         let userId = req.user._id
-        let userCart = await cartCollection.findOne({ user: userId },{"products._id":-1}).populate("products.product")
+        let userCart = await cartCollection.findOne({ user: userId }, { "products._id": -1 }).populate("products.product")
         if (!userCart) return res.status(404).json({ Message: "User Cart Not Found" })
 
         return res.json({ Message: "Success", Data: userCart })

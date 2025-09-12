@@ -1,6 +1,6 @@
 import { productCollection } from '../Model/product.model.js'
 import { userCollection } from '../Model/user.model.js'
-
+import { modelMap } from '../Model/productTypes.model.js'
 
 
 export async function createProduct(req, res) {
@@ -9,7 +9,7 @@ export async function createProduct(req, res) {
         let sellerId = req.user._id
 
         let body = req.body
-        if (!body || !req.file) return res.status(400).json({ Message: "Error bad request" })
+        if (!body || !req.file || !body.type) return res.status(400).json({ Message: "Error bad request" })
         const product = {
             ...body,
             seller: sellerId,
@@ -18,13 +18,14 @@ export async function createProduct(req, res) {
                 ID: req.file.filename
             }
         }
-
-        let createdProduct = await productCollection.create(product)
+        console.log(body)
+        const type = modelMap[body.type]
+        let createdProduct = await type.create(product)
 
         return res.json({ Message: "Success", product: createdProduct })
     } catch (error) {
 
-        return res.status(400).json({ Message: `Erroraaa: ${error}` })
+        return res.status(400).json({ Message: ` ${error}` })
     }
 }
 
@@ -59,23 +60,27 @@ export async function getProductById(req, res) {
 export async function getProducts(req, res) {
     try {
         let category = req.query.category
+        let type = req.query.type
         let filter = req.query.filter
         let products
-        if (!category && !filter) {
+        if (!category && !filter && !type) {
             products = await productCollection.find()
             console.log(products)
         }
-        else if(category){
+        else if (category) {
             products = await productCollection.find({ productCategory: category })
         }
-        else if(filter == "flashSales"){
-            products = await productCollection.find({flashSales: {$gt : 0}})
+        else if (type){
+            products = await productCollection.find({type:type})
         }
-        else if(filter == "bestSellingProducts"){
-            products = await productCollection.find().sort({amountSold:-1}).limit(2)
+        else if (filter == "flashSales") {
+            products = await productCollection.find({ flashSales: { $gt: 0 } })
         }
-        else if(filter == "newArrivals"){
-            products = await productCollection.find().sort({createdAt:-1}).limit(4)
+        else if (filter == "bestSellingProducts") {
+            products = await productCollection.find().sort({ amountSold: -1 }).limit(2)
+        }
+        else if (filter == "newArrivals") {
+            products = await productCollection.find().sort({ createdAt: -1 }).limit(4)
         }
 
         return res.json({ Message: "Success", products: products })
@@ -85,6 +90,8 @@ export async function getProducts(req, res) {
 }
 
 //Done
+
+// THIS NEEDS TO BE UPDATED TO THE LATEST TYPE UPDATES ( SIGH )
 export async function updateSellerProduct(req, res) {
     try {
         let body = req.body
@@ -113,18 +120,18 @@ export async function updateSellerProduct(req, res) {
 }
 
 //Tested - Admin related function to apply a flash sales discount on a given product
-export async function applyFlashSale(req,res){
-    try{
+export async function applyFlashSale(req, res) {
+    try {
         let productId = req.params.productId
-    let {discount} = req.body
-        if(!discount) return res.status(400).json({Message:"Missing Discount"})
-    let product = await productCollection.findOneAndUpdate({_id:productId},{flashSales:discount},{new:true})
-    if(!product) return res.status(404).json({Message:"Product Not Found"})
-    return res.json({Message:"Success",product:product})
-    }catch(error){
-        return res.status(400).json({Message:`${error}`})
+        let { discount } = req.body
+        if (!discount) return res.status(400).json({ Message: "Missing Discount" })
+        let product = await productCollection.findOneAndUpdate({ _id: productId }, { flashSales: discount }, { new: true })
+        if (!product) return res.status(404).json({ Message: "Product Not Found" })
+        return res.json({ Message: "Success", product: product })
+    } catch (error) {
+        return res.status(400).json({ Message: `${error}` })
     }
-    
+
 }
 
 

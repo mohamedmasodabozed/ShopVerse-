@@ -16,6 +16,10 @@ const productSchema = mongoose.Schema({
         required:true,
         enum:['Woman\'s Fashion','Men\'s Fashion','Electronics','Home Appliances','Medicine','Sports & Outdoor','Baby\'s & Toys','Groceries & Pets','Health & Beauty']
     },
+    // type:{
+    //     type:String,
+    //     required:true
+    // },
     productPrice:{
         type:Number,
         required:true
@@ -28,10 +32,10 @@ const productSchema = mongoose.Schema({
     },
 
 
-    productQuantity:{
-        type:Number,
-        required:true
-    },
+    // productQuantity:{
+    //     type:Number,
+    //     required:true
+    // },
     productImage:{
         URL:{
             type:String,
@@ -60,7 +64,7 @@ const productSchema = mongoose.Schema({
     }
 
 
-}, {timestamps:true})
+},{discriminatorKey:"type"}, {timestamps:true})
 
 
 productSchema.virtual('finalPrice').get( function (){
