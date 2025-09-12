@@ -24,17 +24,21 @@ const cartSchema = mongoose.Schema({
 cartSchema.pre('findOneAndUpdate', async function (next) {
     try {
 
-        const obj = this.getFilter()
+        const filter = this.getFilter()
         const update = this.getUpdate()
+        let productExistsInCart
         console.log(update)
-        if (!update['$inc']) {
-            next()
+        if (update['$inc']) {
+            productExistsInCart = await cartCollection.findOne({user:filter.user , "products.product": filter['products.product']})
         }
+        if(!productExistsInCart) return next()
 
+        console.log(filter['products.product'])
+        return next(new Error("Quantity Exceeds Product Quantity"))
         const addedQuantity = update['$inc']['products.$.quantity']
-        const productId = obj['products.product']
+        const productId = filter['products.product']
         let product = await productCollection.findOne({ _id: productId })
-        let cartProduct = await cartCollection.findOne({ user: obj.user })
+        let cartProduct = await cartCollection.findOne({ user: filter.user })
         // console.log(cartProduct)
         let filtered = cartProduct.products.filter((product) => product.product == productId)
         // console.log(filtered)
