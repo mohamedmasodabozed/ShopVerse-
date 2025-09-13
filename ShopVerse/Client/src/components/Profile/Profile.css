@@ -107,7 +107,10 @@
     font-weight: 500;
     color: #333;
 }
-
+.hide 
+{
+  display: hidden;
+}
 .form-group input {
     width: 100%;
     padding: 0.8rem 1rem;
@@ -298,6 +301,81 @@
   padding: 20px;
   color: #888;
   font-style: italic;
+}
+
+/* Dynamic Fields (Product Specifications) */
+.dynamic-fields-section {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-left: 3px solid #DB4444;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.dynamic-fields-section h3 {
+  margin: 0 0 12px 0;
+  color: #DB4444;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.field-group {
+  margin-bottom: 14px;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* For array-type groups (e.g., sizes, colors) */
+.array-field {
+  background: #fff;
+  border: 1px dashed #e6e6e6;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.array-field h4 {
+  margin: 0 0 10px 0;
+  color: #444;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Subfield row layout */
+.subfield-group {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .subfield-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Unified input look for dynamic fields */
+.styled-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
+}
+
+.styled-input:focus {
+  border-color: #DB4444;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(219, 68, 68, 0.12);
 }
 
 @media (min-width: 768px) {
