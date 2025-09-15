@@ -245,6 +245,17 @@ export const homeAppliances = productCollection.discriminator('Home Appliances',
 
 export const phone = productCollection.discriminator('Phone',
     new mongoose.Schema({
+        colors: [{
+            color: {
+                type: String,
+                required: true
+            },
+            stock: {
+                type: Number,
+                required: true
+                
+            }
+        }],
         brand: {
             type: String,
             required: true
@@ -266,10 +277,6 @@ export const phone = productCollection.discriminator('Phone',
             required: true
         },
         screenSize: {
-            type: Number,
-            required: true
-        },
-        stock: {
             type: Number,
             required: true
         }
@@ -278,6 +285,17 @@ export const phone = productCollection.discriminator('Phone',
 
 export const tablet = productCollection.discriminator('Tablet',
     new mongoose.Schema({
+        colors: [{
+            color: {
+                type: String,
+                required: true
+            },
+            stock: {
+                type: Number,
+                required: true
+                
+            }
+        }],
         brand: {
             type: String,
             required: true
@@ -299,10 +317,6 @@ export const tablet = productCollection.discriminator('Tablet',
             required: true
         },
         screenSize: {
-            type: Number,
-            required: true
-        },
-        stock: {
             type: Number,
             required: true
         }
@@ -311,6 +325,17 @@ export const tablet = productCollection.discriminator('Tablet',
 
 export const laptop = productCollection.discriminator('Laptop',
     new mongoose.Schema({
+        colors: [{
+            color: {
+                type: String,
+                required: true
+            },
+            stock: {
+                type: Number,
+                required: true
+                
+            }
+        }],
         brand: {
             type: String,
             required: true
@@ -334,16 +359,23 @@ export const laptop = productCollection.discriminator('Laptop',
         screenSize: {
             type: Number,
             required: true
-        },
-        stock: {
-            type: Number,
-            required: true
         }
     },{_id:false}  )
 )
 
 export const headPhones = productCollection.discriminator('Headphones',
     new mongoose.Schema({
+        colors: [{
+            color: {
+                type: String,
+                required: true
+            },
+            stock: {
+                type: Number,
+                required: true
+                
+            }
+        }],
         brand: {
             type: String,
             required: true
@@ -355,16 +387,23 @@ export const headPhones = productCollection.discriminator('Headphones',
         battery: {
             type: Number,
             required: true
-        },
-        stock: {
-            type: Number,
-            required: true
         }
     },{_id:false} )
 )
 
 export const smartWatch = productCollection.discriminator('Smartwatch',
     new mongoose.Schema({
+        colors: [{
+            color: {
+                type: String,
+                required: true
+            },
+            stock: {
+                type: Number,
+                required: true
+                
+            }
+        }],
         brand: {
             type: String,
             required: true
@@ -380,16 +419,23 @@ export const smartWatch = productCollection.discriminator('Smartwatch',
         screenSize: {
             type: Number,
             required: true
-        },
-        stock: {
-            type: Number,
-            required: true
         }
     },{_id:false} )
 )
 
 export const camera = productCollection.discriminator('Camera',
     new mongoose.Schema({
+        colors: [{
+            color: {
+                type: String,
+                required: true
+            },
+            stock: {
+                type: Number,
+                required: true
+                
+            }
+        }],
         brand: {
             type: String,
             required: true
