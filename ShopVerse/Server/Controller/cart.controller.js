@@ -33,30 +33,99 @@ export async function addToCart(req, res) {
         let productExists = await productCollection.findById(productId)
         if (!productExists) return res.status(404).json({ Message: "Product doesn't exist" })
         if (size && color) {
-            updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId, "products.size": size, "products.color": color }, { $inc: { "products.$.quantity": quantity } }, { new: true })
+            if(!productExists.sizes) return res.status(400).json({Message:"This product does not have sizes"})
 
-            updatedCart = updatedCart ? updatedCart : await cartCollection.findOneAndUpdate({ user: userId }, { $push: { products: { product: productId, quantity: quantity,size:size,color:color } }}, { new: true })
+            let sizeExists = productExists.sizes.filter((sizes) => sizes.size == size)
+            if(sizeExists.length === 0) return res.status(400).json({Message:"This product doesnt have the requested size"})
+            productExists = productExists.sizes.filter((sizes) => sizes.size == size)[0].colors.filter((colors) => colors.color == color)
+            if (productExists.length === 0) return res.status(400).json({ Message: "The requested size doesnt have that color" })
+            const productExistsInCart = await cartCollection.findOne({
+                user: userId,
+                products: {
+                    $elemMatch: {
+                        product: productId,
+                        size: size,
+                        color: color
+                    }
+                }
+            })
+
+
+            if (productExistsInCart) {
+
+
+                updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, { $inc: { "products.$[element].quantity": quantity } },
+                    {
+                        arrayFilters: [{
+                            "element.product": productId, "element.size": size, "element.color": color
+                        }],
+                        new: true
+                    })
+            }
+
+            else {
+                console.log("Hello")
+                if (quantity > productExists[0].stock) return res.status(400).json({ Message: "requested quantity does not exist in stock" })
+                updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, { $push: { products: { product: productId, quantity: quantity, size: size, color: color } } }, { new: true })
+            }
+
         }
-        else if(color){
-            updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId, "products.color": color }, { $inc: { "products.$.quantity": quantity } }, { new: true })
+        else if (color) {
+            console.log("asfaaaaaaaaaaaaa")
+            console.log(productExists)
+            if(!productExists.colors) return res.status(400).json({ Message: "This product does not have colors" })
+            productExists = productExists.colors.filter((colors) => colors.color == color)
+            if (productExists.length === 0) return res.status(400).json({ Message: "Wrong Color" })
+            const productExistsInCart = await cartCollection.findOne({
+                user: userId,
+                products: {
+                    $elemMatch: {
+                        product: productId,
+                        color: color
+                    }
+                }
+            })
 
-            updatedCart = updatedCart ? updatedCart : await cartCollection.findOneAndUpdate({ user: userId }, { $push: { products: { product: productId, quantity: quantity,color:color } }}, { new: true })
+            // console.log(productExistsInCart)
+            if (productExistsInCart) {
+                updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, { $inc: { "products.$[element].quantity": quantity } }, {
+                    arrayFilters: [{
+                        "element.product": productId, "element.color": color
+                    }],
+                    new: true
+                })
+            }
+            else {
+                if (quantity > productExists[0].stock) return res.status(400).json({ Message: "requested quantity does not exist in stock" })
+
+                updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, { $push: { products: { product: productId, quantity: quantity, color: color } } }, { new: true })
+            }
         }
-        else{
-            updatedCart = await cartCollection.findOneAndUpdate({user:userId},{$push:{products:{product:productId, quantity:quantity}}})
+        else {
+            const productExistsInCart = await cartCollection.findOne({
+                user: userId,
+                products: {
+                    $elemMatch: {
+                        product: productId
+                    }
+                }
+            })
+
+            if (productExistsInCart) {
+                updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, { $inc: { "products.$[element].quantity": quantity } }, {
+                    arrayFilters: [{
+                        "element.product": productId
+                    }],
+                    new: true
+                })
+            }
+            else {
+                if (quantity > productExists.stock) return res.status(400).json({ Message: "requested quantity does not exist in stock" })
+
+                updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, { $push: { products: { product: productId, quantity: quantity } } }, { new: true })
+            }
         }
 
-
-        // if (cartProductExists) {
-        //     updatedCart = await cartCollection.findOneAndUpdate({ user: userId, "products.product": productId }, { $inc: { "products.$.quantity": quantity } }, { new: true })
-        //     console.log(updatedCart)
-        // }
-
-        // else if (!cartProductExists) {
-        //     updatedCart = await cartCollection.findOneAndUpdate({ user: userId }, {
-        //         $push: { products: { product: productId, quantity: quantity } }
-        //     }, { new: true })
-        // }
         return res.json({ Message: "Success", Data: updatedCart })
     } catch (error) {
         return res.status(400).json({ Message: `${error}` })
