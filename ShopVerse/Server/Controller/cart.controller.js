@@ -167,7 +167,7 @@ export async function getCartLen(req, res) {
 export async function getCartItems(req, res) {
     try {
         let userId = req.user._id
-        let userCart = await cartCollection.findOne({ user: userId }, { "products._id": -1 }).populate("products.product")
+        let userCart = await cartCollection.findOne({ user: userId }).populate("products.product")
         if (!userCart) return res.status(404).json({ Message: "User Cart Not Found" })
 
         return res.json({ Message: "Success", Data: userCart })
