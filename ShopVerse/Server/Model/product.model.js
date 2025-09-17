@@ -64,7 +64,7 @@ const productSchema = mongoose.Schema({
     }
 
 
-},{discriminatorKey:"type"}, {timestamps:true})
+},{discriminatorKey:"type",timestamps:true})
 
 
 productSchema.virtual('finalPrice').get( function (){
